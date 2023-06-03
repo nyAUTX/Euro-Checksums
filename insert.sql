@@ -27,7 +27,7 @@ VALUES
     (440, 'LTU'),
     (233, 'EST'),
     (246, 'FIN'),
-    (246, 'SVK'),
+    (703, 'SVK'),
     (196, 'CYP'),
     (705, 'SVN'),
     (578, 'NOR'),
@@ -35,7 +35,7 @@ VALUES
     (208, 'DNK'),
     (442, 'LUX'),
     (203, 'CZE'),
-    (705, 'MLT');
+    (470, 'MLT');
 SET IDENTITY_INSERT Countries OFF;
 
 -- CREATE TABLE LCountries (countryID int NOT NULL, languageID int NOT NULL, name varchar(255) NOT NULL, PRIMARY KEY (countryID, languageID));
@@ -75,8 +75,8 @@ VALUES
     (233,2,'Estonia'),
     (246,1,'Finnland'),
     (246,2,'Finland'),
-    (246,1,'Slowakei'),
-    (246,2,'Slovakia'),
+    (703,1,'Slowakei'),
+    (703,2,'Slovakia'),
     (196,1,'Zypern'),
     (196,2,'Cyprus'),
     (705,1,'Slowenien'),
@@ -91,8 +91,8 @@ VALUES
     (442,2,'Luxembourg'),
     (203,1,'Tschechien'),
     (203,2,'Czech Republic'),
-    (705,1,'Malta'),
-    (705,2,'Malta');
+    (470,1,'Malta'),
+    (470,2,'Malta');
 
 -- CREATE TABLE Cities (id int IDENTITY NOT NULL, code char(6) NOT NULL UNIQUE, PRIMARY KEY (id));
 SET IDENTITY_INSERT Cities ON;
@@ -109,7 +109,7 @@ VALUES
     (9, 'DE-BER'),
     (10, 'IT-ROM'),
     (11, 'IE-DUB'),
-    (12, 'FR-CHA'),
+    (12, 'FR-CHE'),
     (13, 'ES-MAD'),
     (14, 'DE-LEI'),
     (15, 'DE-MUN'),
@@ -127,7 +127,10 @@ VALUES
     (27, 'DK-COP'),
     (28, 'LU-LUX'),
     (29, 'CZ-PRA'),
-    (30, 'MT-VAL');
+    (30, 'MT-VAL'),
+    (31, 'SE-TUM'),
+    (32, 'FI-VAN'),
+    (33, 'NL-HAR');
 
 -- CREATE TABLE LCities (cityID int NOT NULL, languageID int NOT NULL, name varchar(255) NOT NULL, PRIMARY KEY (cityID, languageID));
 INSERT INTO LCities (cityID, languageID, name)
@@ -154,8 +157,8 @@ VALUES
     (10,2, 'Rome'),
     (11,1, 'Dublin'),
     (11,2, 'Dublin'),
-    (12,1, 'Chantepie'),
-    (12,2, 'Chantepie'),
+    (12,1, 'Chamalières'),
+    (12,2, 'Chamalières'),
     (13,1, 'Madrid'),
     (13,2, 'Madrid'),
     (14,1, 'Loughton'),
@@ -191,71 +194,83 @@ VALUES
     (29,1, 'Prag'),
     (29,2, 'Prague'),
     (30,1, 'Valletta'),
-    (30,2, 'Valletta');
+    (30,2, 'Valletta'),
+    (31,1, 'Tumba'),
+    (31,2, 'Tumba'),
+    (32,1, 'Vantaa'),
+    (32,2, 'Vantaa'),
+    (33,1, 'Haarlem'),
+    (33,2, 'Haarlem');
 
--- CREATE TABLE EuropeSeries (id int IDENTITY NOT NULL, code char(1) NOT NULL, printery varchar(255) NOT NULL, country varchar(255) NOT NULL, city varchar(255) NOT NULL, circulation bit NOT NULL, PRIMARY KEY (id));
 
-INSERT INTO EuropeSeries
-VALUES
-  ('D', 'Polska Wytwórnia Papierów Wartościowych', 'Poland', 'Warsaw', 'FALSE'),
-  ('E', 'Oberthur Fiduciaire', 'France', 'Chantepie', 'TRUE'),
-  ('F', 'Oberthur Fiduciaire AD Bulgaria', 'Bulgaria', 'Sofia', 'TRUE'),
-  ('H', 'De La Rue Currency', 'United Kingdom', 'Loughton', 'FALSE'),
-  ('J', 'De La Rue Currency', 'United Kingdom', 'Gateshead', 'FALSE'),
-  ('M', 'Valora SA', 'Portugal', 'Carregado', 'TRUE'),
-  ('N', 'Österreichische Banknoten- und Sicherheitsdruck GmbH', 'Austria', 'Vienna', 'TRUE'),
-  ('P', 'Joh. Enschede Security Printing BV', 'Netherlands', 'Haarlem', 'TRUE'),
-  ('R', 'Bundesdruckerei GmbH', 'Germany', 'Berlin', 'TRUE'),
-  ('S', 'Banca d’Italia', 'Italy', 'Rome', 'TRUE'),
-  ('T', 'Central Bank of Ireland', 'Ireland', 'Dublin', 'TRUE'),
-  ('U', 'Banque de France', 'France', 'Chamalières', 'TRUE'),
-  ('V', 'IMBISA', 'Spain', 'Madrid', 'TRUE'),
-  ('W', 'Giesecke+Devrient GmbH', 'Germany', 'Leipzig', 'TRUE'),
-  ('X', 'Giesecke+Devrient GmbH', 'Germany', 'Munich', 'TRUE'),
-  ('Y', 'Bank of Greece', 'Greece', 'Athens', 'TRUE'),
-  ('Z', 'Nationale Bank van België', 'Belgium', 'Brussels', 'TRUE');
 
--- CREATE TABLE OldSeries (id int IDENTITY NOT NULL, code char(1) NOT NULL, country varchar(255) NOT NULL, circulation bit NOT NULL, PRIMARY KEY (id));
+-- CREATE TABLE EuropeSeries (id int IDENTITY NOT NULL, code char(1) NOT NULL, printery varchar(255) NOT NULL, countryID int NOT NULL, cityID int NOT NULL, circulation int NOT NULL, PRIMARY KEY (id));
 
-INSERT INTO OldSeries (code, country, circulation) VALUES ('B', 'Lithuania', 'FALSE');
-INSERT INTO OldSeries (code, country, circulation) VALUES ('C', 'Latvia', 'FALSE');
-INSERT INTO OldSeries (code, country, circulation) VALUES ('D', 'Estonia', 'TRUE');
-INSERT INTO OldSeries (code, country, circulation) VALUES ('E', 'Slovakia', 'TRUE');
-INSERT INTO OldSeries (code, country, circulation) VALUES ('F', 'Malta', 'TRUE');
-INSERT INTO OldSeries (code, country, circulation) VALUES ('G', 'Cyprus', 'TRUE');
-INSERT INTO OldSeries (code, country, circulation) VALUES ('H', 'Slovenia', 'TRUE');
-INSERT INTO OldSeries (code, country, circulation) VALUES ('J', 'United Kingdom', 'FALSE');
-INSERT INTO OldSeries (code, country, circulation) VALUES ('K', 'Sweden', 'FALSE');
-INSERT INTO OldSeries (code, country, circulation) VALUES ('L', 'Finland', 'TRUE');
-INSERT INTO OldSeries (code, country, circulation) VALUES ('M', 'Portugal', 'TRUE');
-INSERT INTO OldSeries (code, country, circulation) VALUES ('N', 'Austria', 'TRUE');
-INSERT INTO OldSeries (code, country, circulation) VALUES ('P', 'Netherlands', 'TRUE');
-INSERT INTO OldSeries (code, country, circulation) VALUES ('R', 'Luxembourg', 'FALSE');
-INSERT INTO OldSeries (code, country, circulation) VALUES ('S', 'Italy', 'TRUE');
-INSERT INTO OldSeries (code, country, circulation) VALUES ('T', 'Ireland', 'TRUE');
-INSERT INTO OldSeries (code, country, circulation) VALUES ('U', 'France', 'TRUE');
-INSERT INTO OldSeries (code, country, circulation) VALUES ('V', 'Spain', 'TRUE');
-INSERT INTO OldSeries (code, country, circulation) VALUES ('W', 'Denmark', 'FALSE');
-INSERT INTO OldSeries (code, country, circulation) VALUES ('X', 'Germany', 'TRUE');
-INSERT INTO OldSeries (code, country, circulation) VALUES ('Y', 'Greece', 'TRUE');
-INSERT INTO OldSeries (code, country, circulation) VALUES ('Z', 'Belgium', 'TRUE');
+INSERT INTO EuropeSeries (code, printery, countryID, cityID, circulation)
+    VALUES
+        ('D', 'Polska Wytwórnia Papierów Wartościowych', 616, 1, 0),
+        ('E', 'Oberthur Fiduciaire', 250, 2, 1),
+        ('F', 'Oberthur Fiduciaire AD Bulgaria', 100, 3, 1),
+        ('H', 'De La Rue Currency', 826, 4, 0),
+        ('J', 'De La Rue Currency', 826, 5, 0),
+        ('M', 'Valora SA', 620, 6, 1),
+        ('N', 'Österreichische Banknoten- und Sicherheitsdruck GmbH', 40, 7, 1),
+        ('P', 'Joh. Enschede Security Printing BV', 528, 8, 1),
+        ('R', 'Bundesdruckerei GmbH', 276, 9, 1),
+        ('S', 'Banca d’Italia', 380, 10, 1),
+        ('T', 'Central Bank of Ireland', 372, 11, 1),
+        ('U', 'Banque de France', 250, 2, 1),
+        ('V', 'IMBISA', 724, 13, 1),
+        ('W', 'Giesecke+Devrient GmbH', 276, 14, 1),
+        ('X', 'Giesecke+Devrient GmbH', 276, 15, 1),
+        ('Y', 'Bank of Greece', 300, 16, 1),
+        ('Z', 'Nationale Bank van België', 56, 17, 1);
 
--- CREATE TABLE Printery (id int IDENTITY NOT NULL, code char(1) NOT NULL, name varchar(255) NOT NULL, country varchar(255) NOT NULL, city varchar(255) NOT NULL, circulation int NOT NULL, PRIMARY KEY (id));
+-- CREATE TABLE OldSeries (id int IDENTITY NOT NULL, code char(1) NOT NULL, countryID int NOT NULL, circulation bit NOT NULL, PRIMARY KEY (id));
 
-INSERT INTO Printery (code, name, country, city, circulation) VALUES ('A', 'Bank of England Printing Works', 'United Kingdom', 'Loughton', 'FALSE');
-INSERT INTO Printery (code, name, country, city, circulation) VALUES ('C', 'AB Tumba Bruk', 'Sweden', 'Tumba', 'FALSE');
-INSERT INTO Printery (code, name, country, city, circulation) VALUES ('D', 'Setec Oy', 'Finland', 'Vantaa', 'TRUE');
-INSERT INTO Printery (code, name, country, city, circulation) VALUES ('E', 'Oberthur Technologies', 'France', 'Chantepie', 'TRUE');
-INSERT INTO Printery (code, name, country, city, circulation) VALUES ('F', 'Österreichische Banknoten- und Sicherheitsdruck GmbH', 'Austria', 'Wien', 'TRUE');
-INSERT INTO Printery (code, name, country, city, circulation) VALUES ('G', 'Koninklijke Joh. Enschedé', 'Netherlands', 'Haarlem', 'TRUE');
-INSERT INTO Printery (code, name, country, city, circulation) VALUES ('H', 'De La Rue plc.', 'United Kingdom', 'Gateshead', 'TRUE');
-INSERT INTO Printery (code, name, country, city, circulation) VALUES ('J', 'Istituto Poligrafico e Zecca dello Stato', 'Italy', 'Rom', 'TRUE');
-INSERT INTO Printery (code, name, country, city, circulation) VALUES ('K', 'Central Bank of Ireland', 'Ireland', 'Dublin', 'TRUE');
-INSERT INTO Printery (code, name, country, city, circulation) VALUES ('L', 'Banque de France', 'France', 'Chamalières', 'TRUE');
-INSERT INTO Printery (code, name, country, city, circulation) VALUES ('M', 'Fábrica Nacional de Moneda y Timbre', 'Spain', 'Madrid', 'TRUE');
-INSERT INTO Printery (code, name, country, city, circulation) VALUES ('N', 'Bank von Griechenland', 'Greece', 'Athen', 'TRUE');
-INSERT INTO Printery (code, name, country, city, circulation) VALUES ('P', 'Giesecke+Devrient GmbH', 'Germany', 'München/Leipzig', 'TRUE');
-INSERT INTO Printery (code, name, country, city, circulation) VALUES ('R', 'Thunderstruck', 'Germany', 'Berlin', 'TRUE');
-INSERT INTO Printery (code, name, country, city, circulation) VALUES ('S', 'Danmarks Nationalbank', 'Denmark', 'Kopenhagen', 'FALSE');
-INSERT INTO Printery (code, name, country, city, circulation) VALUES ('T', 'Nationale Bank van België', 'Belgium', 'Brüssel', 'TRUE');
-INSERT INTO Printery (code, name, country, city, circulation) VALUES ('U', 'Valora SA', 'Portugal', 'Carregado', 'TRUE');
+INSERT INTO OldSeries (code, countryID, circulation)
+    VALUES
+        ('B', 440, 0),
+        ('C', 428, 0),
+        ('D', 233, 1),
+        ('E', 703, 1),
+        ('F', 470, 1),
+        ('G', 196, 1),
+        ('H', 705, 1),
+        ('J', 826, 0),
+        ('K', 752, 0),
+        ('L', 250, 1),
+        ('M', 620, 1),
+        ('N', 40, 1),
+        ('P', 528, 1),
+        ('R', 442, 0),
+        ('S', 380, 1),
+        ('T', 372, 1),
+        ('U', 250, 1),
+        ('V', 724, 1),
+        ('W', 208, 0),
+        ('X', 276, 1),
+        ('Y', 300, 1),
+        ('Z', 56, 1);
+
+
+-- CREATE TABLE Printery (id int IDENTITY NOT NULL, code char(1) NOT NULL, name varchar(255) NOT NULL, countryID int NOT NULL, cityID int NOT NULL, circulation int NOT NULL, PRIMARY KEY (id));
+INSERT INTO Printery (code, name, countryID, cityID, circulation)
+    VALUES
+        ('A', 'Bank of England Printing Works', 826, 4, 0),
+        ('C', 'AB Tumba Bruk', 752, 31, 0),
+        ('D', 'Setec Oy', 246, 32, 1),
+        ('E', 'Oberthur Technologies', 250, 2, 1),
+        ('F', 'Österreichische Banknoten- und Sicherheitsdruck GmbH', 40, 7, 1),
+        ('G', 'Koninklijke Joh. Enschedé', 528, 33, 1),
+        ('H', 'De La Rue plc.', 826, 5, 1),
+        ('J', 'Istituto Poligrafico e Zecca dello Stato', 380, 10, 1),
+        ('K', 'Central Bank of Ireland', 372, 11, 1),
+        ('L', 'Banque de France', 250, 12, 1),
+        ('M', 'Fábrica Nacional de Moneda y Timbre', 724, 13, 1),
+        ('N', 'Bank von Griechenland', 300, 16, 1),
+        ('P', 'Giesecke+Devrient GmbH', 276, 15, 1),
+        ('R', 'Thunderstruck', 276, 9, 1),
+        ('S', 'Danmarks Nationalbank', 208, 27, 0),
+        ('T', 'Nationale Bank van België', 56, 17, 1),
+        ('U', 'Valora SA', 620, 12, 1);
