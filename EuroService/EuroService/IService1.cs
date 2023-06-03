@@ -16,11 +16,18 @@ namespace EuroService
 
         [OperationContract]
         bool CheckOldSerial(string serial);
+        [OperationContract]
         bool CheckNewSerial(string serial);
+        [OperationContract]
         string getCountry(string serial, string lang);
+        [OperationContract]
         string getNewPrintery(string serial, string lang);
+        [OperationContract]
         string getOldPrintery(string serial, string lang);
+        [OperationContract]
         string getMessage(string serial, string lang);
+        [OperationContract]
+        Dictionary<string, string> GetAllLanguages();
 
         [OperationContract]
         CompositeType GetDataUsingDataContract(CompositeType composite);

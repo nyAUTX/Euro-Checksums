@@ -16,7 +16,7 @@ namespace EuroService
     public class Service1 : IService1
     {
 
-        string connectionString = "Data Source=localhost;Initial Catalog=[db];Integrated Security=True;";
+        string connectionString = "Data Source=localhost;Initial Catalog=Euro;Integrated Security=True;";
 
         public bool CheckOldSerial(string serial)
         {
@@ -124,11 +124,12 @@ namespace EuroService
 
                         connection.Open();
 
-                        object result = command.ExecuteReader();
-
-                        if (result != null)
+                        using (SqlDataReader reader = command.ExecuteReader())
                         {
-                            message = result.ToString();
+                            if (reader.Read())
+                            {
+                                message = reader["country"].ToString();
+                            }
                         }
                     }
                     catch (Exception ex)
@@ -298,6 +299,38 @@ namespace EuroService
             }
 
             return text;
+        }
+
+        public Dictionary<string, string> GetAllLanguages()
+        {
+            string query = "SELECT code, name FROM Language;";
+
+            Dictionary<string, string> languages = new Dictionary<string, string>();
+
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+                    try
+                    {
+                        connection.Open();
+                        SqlDataReader reader = command.ExecuteReader();
+
+                        while (reader.Read())
+                        {
+                            string code = reader["code"].ToString();
+                            string name = reader["name"].ToString();
+                            languages.Add(code, name);
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine("Error: " + ex.Message);
+                    }
+                }
+            }
+
+            return languages;
         }
 
 

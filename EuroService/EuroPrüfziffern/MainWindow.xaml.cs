@@ -23,6 +23,19 @@ namespace EuroPrüfziffern
         public MainWindow()
         {
             InitializeComponent();
+            ServiceReference1.Service1Client client = new ServiceReference1.Service1Client(ServiceReference1.Service1Client.EndpointConfiguration.BasicHttpBinding_IService1);
+            Dictionary<string, string> languages = client.GetAllLanguages();
+
+            languageBox.ItemsSource = languages;
+            languageBox.DisplayMemberPath = "Value";
+            languageBox.SelectedValuePath = "Key";
+        }
+
+        private void oldCheckButton_Click(object sender, RoutedEventArgs e)
+        {
+            ServiceReference1.Service1Client client = new ServiceReference1.Service1Client(ServiceReference1.Service1Client.EndpointConfiguration.BasicHttpBinding_IService1);
+            bool test = client.CheckOldSerial(serialNo.Text);
+            oldResults.Content = test;
         }
     }
 }

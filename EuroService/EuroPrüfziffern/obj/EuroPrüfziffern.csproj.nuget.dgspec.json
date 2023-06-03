@@ -10,11 +10,11 @@
         "projectUniqueName": "C:\\GIT\\pruefsummen-euro\\EuroService\\EuroPrüfziffern\\EuroPrüfziffern.csproj",
         "projectName": "EuroPrüfziffern",
         "projectPath": "C:\\GIT\\pruefsummen-euro\\EuroService\\EuroPrüfziffern\\EuroPrüfziffern.csproj",
-        "packagesPath": "C:\\Users\\fhern\\.nuget\\packages\\",
+        "packagesPath": "C:\\Users\\spitz\\.nuget\\packages\\",
         "outputPath": "C:\\GIT\\pruefsummen-euro\\EuroService\\EuroPrüfziffern\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\fhern\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\spitz\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -39,6 +39,28 @@
       "frameworks": {
         "net6.0-windows7.0": {
           "targetAlias": "net6.0-windows",
+          "dependencies": {
+            "System.ServiceModel.Duplex": {
+              "target": "Package",
+              "version": "[4.10.*, )"
+            },
+            "System.ServiceModel.Federation": {
+              "target": "Package",
+              "version": "[4.10.*, )"
+            },
+            "System.ServiceModel.Http": {
+              "target": "Package",
+              "version": "[4.10.*, )"
+            },
+            "System.ServiceModel.NetTcp": {
+              "target": "Package",
+              "version": "[4.10.*, )"
+            },
+            "System.ServiceModel.Security": {
+              "target": "Package",
+              "version": "[4.10.*, )"
+            }
+          },
           "imports": [
             "net461",
             "net462",

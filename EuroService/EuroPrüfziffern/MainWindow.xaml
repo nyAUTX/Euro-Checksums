@@ -5,8 +5,16 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:EuroPrüfziffern"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="Euro Prüfziffernkontrolle" Height="450" Width="800">
     <Grid>
+        <ComboBox x:Name="languageBox" HorizontalAlignment="Left" Margin="670,10,0,0" VerticalAlignment="Top" Width="120"/>
+        <Label Content="Alte Geldscheine prüfen" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Height="43" Width="212"/>
+        <Label Content="Seriennummer:&#xD;&#xA;" HorizontalAlignment="Left" Margin="21,53,0,0" VerticalAlignment="Top" Width="120"/>
+        <Label Content="Plattencode:" HorizontalAlignment="Left" Margin="21,100,0,0" VerticalAlignment="Top" Width="120"/>
+        <TextBox x:Name="serialNo" HorizontalAlignment="Left" Margin="141,58,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="120"/>
+        <TextBox x:Name="printCode" HorizontalAlignment="Left" Margin="141,104,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="120"/>
+        <Button x:Name="oldCheckButton" Content="Check" HorizontalAlignment="Left" Margin="296,71,0,0" VerticalAlignment="Top" Height="37" Width="76" Click="oldCheckButton_Click"/>
+        <Label x:Name="oldResults" Content="Label" HorizontalAlignment="Left" Margin="475,58,0,0" VerticalAlignment="Top" Height="64" Width="202"/>
 
     </Grid>
 </Window>
