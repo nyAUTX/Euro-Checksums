@@ -79,24 +79,35 @@ namespace EuroPrüfziffern
             
             if(!oldResults.Content.Equals(""))
             {
+                oldResults.Content = getText("invalidSerial") + "\n\n" + oldResults.Content;
                 return;
             }
             
             if (client.CheckOldSerial(serialNoOld.Text))
             {
-                oldResults.Content += getText("validSerial") + "\n\n";
-                oldResults.Content += getText("oldCountryResult") + ": " + client.getCountry(serialNoOld.Text, languageBox.SelectedValue.ToString()) + "\n";
-                oldResults.Content += getText("oldPrinteryResult") + ": ";
                 Printery printery = client.getOldPrintery(printeryCodeOld.Text, languageBox.SelectedValue.ToString());
-                oldResults.Content += printery.Name + " (" + printery.City + ", " + printery.Country + ")\n";
-                if (!printery.Circulation)
+                string country = client.getCountry(serialNoOld.Text, languageBox.SelectedValue.ToString());
+                if (printery.Name != null && country != null)
                 {
-                    oldResults.Content += getText("warning") + ": " + getText("circulationWarning");
+                    oldResults.Content += getText("validSerial") + "\n\n";
+                    oldResults.Content += getText("oldCountryResult") + ": " + country + "\n";
+                    oldResults.Content += getText("oldPrinteryResult") + ": ";
+                    oldResults.Content += printery.Name + " (" + printery.City + ", " + printery.Country + ")\n";
+                    if (!printery.Circulation)
+                    {
+                        oldResults.Content += getText("warning") + ": " + getText("circulationWarning");
+                    }
                 }
+                else
+                {
+                    oldResults.Content = getText("invalidSerial") + "\n\n" + getText("noDataError");
+                }
+
             }
 
             else
             {
+                oldResults.Content = getText("invalidSerial") + "\n\n";
                 oldResults.Content += getText("error") + ": " + getText("serialInvalidError");
             }
         }
@@ -121,24 +132,32 @@ namespace EuroPrüfziffern
             
             if (!newResults.Content.Equals(""))
             {
+                newResults.Content = getText("invalidSerial") + "\n\n" + newResults.Content;
                 return;
             }
             
             if (client.CheckNewSerial(serialNoNew.Text))
             {
-                
-                newResults.Content += getText("validSerial") + "\n\n";
-                newResults.Content += getText("newResult") + ": \n";
                 Printery printery = client.getNewPrintery(printeryCodeNew.Text, languageBox.SelectedValue.ToString());
-                newResults.Content += printery.Name + "\n" + printery.City + ", " + printery.Country + "\n";
-                if (!printery.Circulation)
+                if (printery.Country != null)
                 {
-                    newResults.Content += getText("warning") + ": " + getText("circulationWarning");
+                    newResults.Content += getText("validSerial") + "\n\n";
+                    newResults.Content += getText("newResult") + ": \n";
+                    newResults.Content += printery.Name + "\n" + printery.City + ", " + printery.Country + "\n";
+                    if (!printery.Circulation)
+                    {
+                        newResults.Content += getText("warning") + ": " + getText("circulationWarning");
+                    }
+                }
+                else
+                {
+                    newResults.Content = getText("invalidSerial") + "\n\n" + getText("noDataError");
                 }
             }
 
             else
             {
+                newResults.Content = getText("invalidSerial") + "\n\n";
                 newResults.Content += getText("error") + ": " + getText("serialInvalidError");
             }
         }

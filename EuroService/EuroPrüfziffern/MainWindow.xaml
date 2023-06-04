@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:EuroPrüfziffern"
         mc:Ignorable="d"
-        Title="Euro Prüfziffernkontrolle" Height="450" Width="1000" MinHeight="450" MinWidth="1000">
+        Title="Euro Prüfziffernkontrolle" Height="475" Width="1000" MinHeight="475" MinWidth="1000">
     <Grid>
         <ComboBox x:Name="languageBox" HorizontalAlignment="Right" Margin="0,0,10,10" VerticalAlignment="Bottom" Width="120" SelectionChanged="languageBox_SelectionChanged"/>
         <Label x:Name="oldTitle" Content="oldTitle" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Height="30" Width="212" FontWeight="Bold"/>
@@ -25,6 +25,8 @@
         <Button x:Name="checkButtonNew" Content="checkButtonNew" HorizontalAlignment="Left" Margin="20,343,0,0" VerticalAlignment="Top" Height="32" Width="215" Click="checkButtonNew_Click"/>
         <Label x:Name="newResults" Content="" HorizontalAlignment="Left" Margin="275,265,0,0" VerticalAlignment="Top" Height="110" Width="583"/>
         <Label x:Name="newDescription" Content="newDescription" HorizontalAlignment="Left" Margin="10,229,0,0" VerticalAlignment="Top" Height="30" Width="390"/>
+        <Separator HorizontalAlignment="Left" Margin="15,190,0,0" VerticalAlignment="Top" BorderBrush="Black" Height="10" Width="960"/>
+        <Separator HorizontalAlignment="Left" Margin="15,380,0,0" VerticalAlignment="Top" BorderBrush="Black" Height="10" Width="960"/>
 
     </Grid>
 </Window>

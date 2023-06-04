@@ -296,6 +296,7 @@ INSERT INTO Texts (textID, [desc])
         (24, 'oldPrinteryResult'),
         (25, 'newResult'),
         (26, 'validSerial'),
+        (27, 'invalidSerial'),
 
         (30, 'error'),
         (31, 'serialFormatError'),
@@ -303,6 +304,7 @@ INSERT INTO Texts (textID, [desc])
         (33, 'serialInvalidError'),
         (34, 'printeryInvalidError'),
         (35, 'codeMatchError'),
+        (36, 'noDataError'),
 
         (40, 'warning'),
         (41, 'circulationWarning');
@@ -339,6 +341,8 @@ INSERT INTO LTexts (textID, languageID, text)
         (25, 2, 'Print office & Issuing country'),
         (26, 1, 'Geldschein ist GÜLTIG'),
         (26, 2, 'Banknote is VALID'),
+        (27, 1, 'Geldschein ist UNGÜLTIG'),
+        (27, 2, 'Banknote is INVALID'),
 
         (30, 1, 'Fehler'),
         (30, 2, 'Error'),
@@ -346,12 +350,14 @@ INSERT INTO LTexts (textID, languageID, text)
         (31, 2, 'Serial number has wrong format'),
         (32, 1, 'Plattencode hat falsches Format'),
         (32, 2, 'Print office code has wrong format'),
-        (33, 1, 'Seriennummer ist UNGÜLTIG'),
-        (33, 2, 'Serial number is INVALID'),
-        (34, 1, 'Plattencode ist UNGÜLTIG'),
-        (34, 2, 'Print office code is UNGÜLTIG'),
+        (33, 1, 'Seriennummer ist Fehlerhaft'),
+        (33, 2, 'Serial number is faulty'),
+        (34, 1, 'Plattencode ist Fehlerhaft'),
+        (34, 2, 'Print office code is faulty'),
         (35, 1, 'Seriennummer und Plattencode passen nicht zusammen'),
         (35, 2, 'Serial number and print office code do not match'),
+        (36, 1, 'Seriennummer / Druckereikennung nicht gefunden'),
+        (36, 2, 'Serial number / print office code not found'),
 
         (40, 1, 'Warnung'),
         (40, 2, 'Warning'),

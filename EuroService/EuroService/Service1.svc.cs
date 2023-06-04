@@ -118,7 +118,7 @@ namespace EuroService
         {
             string query = "SELECT LCountries.name AS country FROM OldSeries JOIN Countries ON OldSeries.countryID = Countries.id JOIN LCountries ON Countries.id = LCountries.countryID JOIN Language ON LCountries.languageID = Language.languageID WHERE OldSeries.code = @Code AND Language.code = @Lang;";
 
-            string message = "Error";
+            string message = null;
 
             // Create a new SqlConnection and SqlCommand
             using (SqlConnection connection = new SqlConnection(connectionString))
