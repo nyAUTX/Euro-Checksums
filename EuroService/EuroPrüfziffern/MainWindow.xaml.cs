@@ -29,6 +29,7 @@ namespace EuroPrüfziffern
             languageBox.ItemsSource = languages;
             languageBox.DisplayMemberPath = "Value";
             languageBox.SelectedValuePath = "Key";
+            languageBox.SelectedIndex = 0;
         }
 
         private void oldCheckButton_Click(object sender, RoutedEventArgs e)

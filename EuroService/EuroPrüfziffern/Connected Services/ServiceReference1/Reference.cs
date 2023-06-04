@@ -14,37 +14,52 @@ namespace ServiceReference1
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="CompositeType", Namespace="http://schemas.datacontract.org/2004/07/EuroService")]
-    public partial class CompositeType : object
+    [System.Runtime.Serialization.DataContractAttribute(Name="Printery", Namespace="http://schemas.datacontract.org/2004/07/EuroService")]
+    public partial class Printery : object
     {
         
-        private bool BoolValueField;
+        private string CityField;
         
-        private string StringValueField;
+        private string CountryField;
+        
+        private string NameField;
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public bool BoolValue
+        public string City
         {
             get
             {
-                return this.BoolValueField;
+                return this.CityField;
             }
             set
             {
-                this.BoolValueField = value;
+                this.CityField = value;
             }
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public string StringValue
+        public string Country
         {
             get
             {
-                return this.StringValueField;
+                return this.CountryField;
             }
             set
             {
-                this.StringValueField = value;
+                this.CountryField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Name
+        {
+            get
+            {
+                return this.NameField;
+            }
+            set
+            {
+                this.NameField = value;
             }
         }
     }
@@ -73,16 +88,16 @@ namespace ServiceReference1
         System.Threading.Tasks.Task<string> getCountryAsync(string serial, string lang);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/getNewPrintery", ReplyAction="http://tempuri.org/IService1/getNewPrinteryResponse")]
-        string getNewPrintery(string serial, string lang);
+        ServiceReference1.Printery getNewPrintery(string serial, string lang);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/getNewPrintery", ReplyAction="http://tempuri.org/IService1/getNewPrinteryResponse")]
-        System.Threading.Tasks.Task<string> getNewPrinteryAsync(string serial, string lang);
+        System.Threading.Tasks.Task<ServiceReference1.Printery> getNewPrinteryAsync(string serial, string lang);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/getOldPrintery", ReplyAction="http://tempuri.org/IService1/getOldPrinteryResponse")]
-        string getOldPrintery(string serial, string lang);
+        ServiceReference1.Printery getOldPrintery(string serial, string lang);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/getOldPrintery", ReplyAction="http://tempuri.org/IService1/getOldPrinteryResponse")]
-        System.Threading.Tasks.Task<string> getOldPrinteryAsync(string serial, string lang);
+        System.Threading.Tasks.Task<ServiceReference1.Printery> getOldPrinteryAsync(string serial, string lang);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/getMessage", ReplyAction="http://tempuri.org/IService1/getMessageResponse")]
         string getMessage(string serial, string lang);
@@ -95,12 +110,6 @@ namespace ServiceReference1
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/GetAllLanguages", ReplyAction="http://tempuri.org/IService1/GetAllLanguagesResponse")]
         System.Threading.Tasks.Task<System.Collections.Generic.Dictionary<string, string>> GetAllLanguagesAsync();
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/GetDataUsingDataContract", ReplyAction="http://tempuri.org/IService1/GetDataUsingDataContractResponse")]
-        ServiceReference1.CompositeType GetDataUsingDataContract(ServiceReference1.CompositeType composite);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/GetDataUsingDataContract", ReplyAction="http://tempuri.org/IService1/GetDataUsingDataContractResponse")]
-        System.Threading.Tasks.Task<ServiceReference1.CompositeType> GetDataUsingDataContractAsync(ServiceReference1.CompositeType composite);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
@@ -176,22 +185,22 @@ namespace ServiceReference1
             return base.Channel.getCountryAsync(serial, lang);
         }
         
-        public string getNewPrintery(string serial, string lang)
+        public ServiceReference1.Printery getNewPrintery(string serial, string lang)
         {
             return base.Channel.getNewPrintery(serial, lang);
         }
         
-        public System.Threading.Tasks.Task<string> getNewPrinteryAsync(string serial, string lang)
+        public System.Threading.Tasks.Task<ServiceReference1.Printery> getNewPrinteryAsync(string serial, string lang)
         {
             return base.Channel.getNewPrinteryAsync(serial, lang);
         }
         
-        public string getOldPrintery(string serial, string lang)
+        public ServiceReference1.Printery getOldPrintery(string serial, string lang)
         {
             return base.Channel.getOldPrintery(serial, lang);
         }
         
-        public System.Threading.Tasks.Task<string> getOldPrinteryAsync(string serial, string lang)
+        public System.Threading.Tasks.Task<ServiceReference1.Printery> getOldPrinteryAsync(string serial, string lang)
         {
             return base.Channel.getOldPrinteryAsync(serial, lang);
         }
@@ -214,16 +223,6 @@ namespace ServiceReference1
         public System.Threading.Tasks.Task<System.Collections.Generic.Dictionary<string, string>> GetAllLanguagesAsync()
         {
             return base.Channel.GetAllLanguagesAsync();
-        }
-        
-        public ServiceReference1.CompositeType GetDataUsingDataContract(ServiceReference1.CompositeType composite)
-        {
-            return base.Channel.GetDataUsingDataContract(composite);
-        }
-        
-        public System.Threading.Tasks.Task<ServiceReference1.CompositeType> GetDataUsingDataContractAsync(ServiceReference1.CompositeType composite)
-        {
-            return base.Channel.GetDataUsingDataContractAsync(composite);
         }
         
         public virtual System.Threading.Tasks.Task OpenAsync()

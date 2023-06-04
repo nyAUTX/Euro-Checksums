@@ -21,40 +21,23 @@ namespace EuroService
         [OperationContract]
         string getCountry(string serial, string lang);
         [OperationContract]
-        string getNewPrintery(string serial, string lang);
+        Printery getNewPrintery(string serial, string lang);
         [OperationContract]
-        string getOldPrintery(string serial, string lang);
+        Printery getOldPrintery(string serial, string lang);
         [OperationContract]
         string getMessage(string serial, string lang);
         [OperationContract]
         Dictionary<string, string> GetAllLanguages();
-
-        [OperationContract]
-        CompositeType GetDataUsingDataContract(CompositeType composite);
-
-        // TODO: Add your service operations here
     }
 
-
-    // Use a data contract as illustrated in the sample below to add composite types to service operations.
     [DataContract]
-    public class CompositeType
+    public class Printery
     {
-        bool boolValue = true;
-        string stringValue = "Hello ";
-
         [DataMember]
-        public bool BoolValue
-        {
-            get { return boolValue; }
-            set { boolValue = value; }
-        }
-
+        public string Name { get; set; }
         [DataMember]
-        public string StringValue
-        {
-            get { return stringValue; }
-            set { stringValue = value; }
-        }
+        public string Country { get; set; }
+        [DataMember]
+        public string City { get; set; }
     }
 }

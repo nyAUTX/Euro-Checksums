@@ -131,6 +131,7 @@ VALUES
     (31, 'SE-TUM'),
     (32, 'FI-VAN'),
     (33, 'NL-HAR');
+SET IDENTITY_INSERT Cities OFF;
 
 -- CREATE TABLE LCities (cityID int NOT NULL, languageID int NOT NULL, name varchar(255) NOT NULL, PRIMARY KEY (cityID, languageID));
 INSERT INTO LCities (cityID, languageID, name)
@@ -274,3 +275,81 @@ INSERT INTO Printery (code, name, countryID, cityID, circulation)
         ('S', 'Danmarks Nationalbank', 208, 27, 0),
         ('T', 'Nationale Bank van België', 56, 17, 1),
         ('U', 'Valora SA', 620, 12, 1);
+
+
+-- CREATE TABLE Texts (textID int IDENTITY NOT NULL, [desc] varchar(255) NOT NULL UNIQUE, PRIMARY KEY (textID));
+SET IDENTITY_INSERT Texts ON;
+INSERT INTO Texts (textID, [desc])
+    VALUES
+        (10, 'oldTitle'),
+        (11, 'newTitle'),
+        (12, 'oldDescription'),
+        (13, 'newDescription'),
+        (14, 'changeLanguage'),
+
+        (20, 'serialNo'),
+        (21, 'printeryCode'),
+        (22, 'checkButton'),
+        (23, 'oldCountryResult'),
+        (24, 'oldPrinteryResult'),
+        (25, 'newResult'),
+        (26, 'validSerial'),
+
+        (30, 'error'),
+        (31, 'serialFormatError'),
+        (32, 'printeryFormatError'),
+        (33, 'serialInvalidError'),
+        (34, 'printeryInvalidError'),
+        (35, 'codeMatchError'),
+
+        (40, 'warnung'),
+        (41, 'circulationWarning');
+SET IDENTITY_INSERT Texts OFF;
+
+-- CREATE TABLE LTexts (textID int NOT NULL, languageID int NOT NULL, text varchar(255) NOT NULL UNIQUE, PRIMARY KEY (textID, languageID));
+INSERT INTO LTexts (textID, languageID, text)
+    VALUES
+        (10, 1, 'Alte Geldscheine prüfen'),
+        (10, 2, 'Check old banknotes'),
+        (11, 1, 'Neue Geldscheine prüfen'),
+        (11, 2, 'Check new banknotes'),
+        (12, 1, 'z.B. Z60162200226'),
+        (12, 2, 'e.g. Z60162200226'),
+        (13, 1, 'z.B. ND6617057128'),
+        (13, 2, 'e.g. ND6617057128'),
+        (14, 1, 'Sprache auswählen'),
+        (14, 2, 'Select Language'),
+
+        (20, 1, 'Seriennummer'),
+        (20, 2, 'Serial number'),
+        (21, 1, 'Plattencode'),
+        (21, 2, 'Printery code'),
+        (22, 1, 'Geldschein prüfen'),
+        (22, 2, 'Check banknote'),
+        (23, 1, 'Austellungsland'),
+        (23, 2, 'Issuing country'),
+        (24, 1, 'Druckerei'),
+        (24, 2, 'Printery'),
+        (25, 1, 'Druckerei & Austellungsland'),
+        (25, 2, 'Printery & Issuing country'),
+        (26, 1, 'Geldschein ist GÜLTIG'),
+        (26, 2, 'Banknote is VALID'),
+
+        (30, 1, 'Fehler'),
+        (30, 2, 'Error'),
+        (31, 1, 'Seriennummer hat falsches Format'),
+        (31, 2, 'Serial number has wrong format'),
+        (32, 1, 'Plattencode hat falsches Format'),
+        (32, 2, 'Printery code has wrong format'),
+        (33, 1, 'Seriennummer ist UNGÜLTIG'),
+        (33, 2, 'Serial number is INVALID'),
+        (34, 1, 'Plattencode ist UNGÜLTIG'),
+        (34, 2, 'Printery code is UNGÜLTIG'),
+        (35, 1, 'Seriennummer und Plattencode passen nicht zusammen'),
+        (35, 2, 'Serial number and printery code do not match'),
+
+        (40, 1, 'Warnung'),
+        (40, 2, 'Warning'),
+        (41, 1, 'Derzeit sind keine Geldscheine durch dieses Land / diese Druckerei im Umlauf'),
+        (41, 2, 'Currently there are no banknotes in circulation by this country / printery');
+

@@ -141,13 +141,13 @@ namespace EuroService
 
             return message;
         }
-
-        public string getNewPrintery(string serial, string lang)
+        
+        public Printery getNewPrintery(string serial, string lang)
         {
+            Printery printery = new Printery();
+            
             string query = "SELECT EuropeSeries.printery AS printery_name, LCities.name AS city, LCountries.name AS country FROM EuropeSeries JOIN Cities ON EuropeSeries.cityID = Cities.id JOIN LCities ON Cities.id = LCities.cityID JOIN Countries ON EuropeSeries.countryID = Countries.id JOIN LCountries ON Countries.id = LCountries.countryID JOIN Language ON LCities.languageID = Language.languageID AND LCountries.languageID = Language.languageID WHERE EuropeSeries.code = @Code AND Language.code = @Lang;";
 
-            string xmlMessage = string.Empty;
-
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
                 using (SqlCommand command = new SqlCommand(query, connection))
@@ -160,37 +160,12 @@ namespace EuroService
                         connection.Open();
 
                         SqlDataReader reader = command.ExecuteReader();
-
+                        
                         if (reader.Read())
                         {
-                            string printeryName = reader["printery_name"].ToString();
-                            string city = reader["city"].ToString();
-                            string country = reader["country"].ToString();
-
-                            using (StringWriter stringWriter = new StringWriter())
-                            using (XmlWriter xmlWriter = XmlWriter.Create(stringWriter))
-                            {
-                                xmlWriter.WriteStartDocument();
-                                xmlWriter.WriteStartElement("Printery");
-
-                                xmlWriter.WriteStartElement("PrinteryName");
-                                xmlWriter.WriteString(printeryName);
-                                xmlWriter.WriteEndElement();
-
-                                xmlWriter.WriteStartElement("City");
-                                xmlWriter.WriteString(city);
-                                xmlWriter.WriteEndElement();
-
-                                xmlWriter.WriteStartElement("Country");
-                                xmlWriter.WriteString(country);
-                                xmlWriter.WriteEndElement();
-
-                                xmlWriter.WriteEndElement();
-                                xmlWriter.WriteEndDocument();
-                                xmlWriter.Flush();
-
-                                xmlMessage = stringWriter.ToString();
-                            }
+                            printery.Name = reader["printery_name"].ToString();
+                            printery.City = reader["city"].ToString();
+                            printery.Country = reader["country"].ToString();
                         }
                     }
                     catch (Exception ex)
@@ -200,14 +175,14 @@ namespace EuroService
                 }
             }
 
-            return xmlMessage;
+            return printery;
         }
 
-        public string getOldPrintery(string serial, string lang)
+        public Printery getOldPrintery(string serial, string lang)
         {
+            Printery printery = new Printery();
+            
             string query = "SELECT Printery.name AS printery_name, LCities.name AS city, LCountries.name AS country FROM Printery JOIN Cities ON Printery.cityID = Cities.id JOIN LCities ON Cities.id = LCities.cityID JOIN Countries ON Printery.countryID = Countries.id JOIN LCountries ON Countries.id = LCountries.countryID JOIN Language ON LCities.languageID = Language.languageID AND LCountries.languageID = Language.languageID WHERE Printery.code = @Code AND Language.code = @Lang;";
-
-            string xmlMessage = string.Empty;
 
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
@@ -224,34 +199,9 @@ namespace EuroService
 
                         if (reader.Read())
                         {
-                            string printeryName = reader["printery_name"].ToString();
-                            string city = reader["city"].ToString();
-                            string country = reader["country"].ToString();
-
-                            using (StringWriter stringWriter = new StringWriter())
-                            using (XmlWriter xmlWriter = XmlWriter.Create(stringWriter))
-                            {
-                                xmlWriter.WriteStartDocument();
-                                xmlWriter.WriteStartElement("Printery");
-
-                                xmlWriter.WriteStartElement("PrinteryName");
-                                xmlWriter.WriteString(printeryName);
-                                xmlWriter.WriteEndElement();
-
-                                xmlWriter.WriteStartElement("City");
-                                xmlWriter.WriteString(city);
-                                xmlWriter.WriteEndElement();
-
-                                xmlWriter.WriteStartElement("Country");
-                                xmlWriter.WriteString(country);
-                                xmlWriter.WriteEndElement();
-
-                                xmlWriter.WriteEndElement();
-                                xmlWriter.WriteEndDocument();
-                                xmlWriter.Flush();
-
-                                xmlMessage = stringWriter.ToString();
-                            }
+                            printery.Name = reader["printery_name"].ToString();
+                            printery.City = reader["city"].ToString();
+                            printery.Country = reader["country"].ToString();
                         }
                     }
                     catch (Exception ex)
@@ -261,7 +211,7 @@ namespace EuroService
                 }
             }
 
-            return xmlMessage;
+            return printery;
         }
 
         public string getMessage(string desc, string lang)
@@ -333,19 +283,5 @@ namespace EuroService
             return languages;
         }
 
-
-
-        public CompositeType GetDataUsingDataContract(CompositeType composite)
-        {
-            if (composite == null)
-            {
-                throw new ArgumentNullException("composite");
-            }
-            if (composite.BoolValue)
-            {
-                composite.StringValue += "Suffix";
-            }
-            return composite;
-        }
     }
 }
