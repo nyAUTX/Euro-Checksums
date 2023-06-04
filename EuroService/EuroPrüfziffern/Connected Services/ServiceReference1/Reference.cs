@@ -18,11 +18,26 @@ namespace ServiceReference1
     public partial class Printery : object
     {
         
+        private bool CirculationField;
+        
         private string CityField;
         
         private string CountryField;
         
         private string NameField;
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public bool Circulation
+        {
+            get
+            {
+                return this.CirculationField;
+            }
+            set
+            {
+                this.CirculationField = value;
+            }
+        }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
         public string City
@@ -80,6 +95,24 @@ namespace ServiceReference1
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/CheckNewSerial", ReplyAction="http://tempuri.org/IService1/CheckNewSerialResponse")]
         System.Threading.Tasks.Task<bool> CheckNewSerialAsync(string serial);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/CheckOldSerialFormat", ReplyAction="http://tempuri.org/IService1/CheckOldSerialFormatResponse")]
+        bool CheckOldSerialFormat(string serial);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/CheckOldSerialFormat", ReplyAction="http://tempuri.org/IService1/CheckOldSerialFormatResponse")]
+        System.Threading.Tasks.Task<bool> CheckOldSerialFormatAsync(string serial);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/CheckNewSerialFormat", ReplyAction="http://tempuri.org/IService1/CheckNewSerialFormatResponse")]
+        bool CheckNewSerialFormat(string serial);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/CheckNewSerialFormat", ReplyAction="http://tempuri.org/IService1/CheckNewSerialFormatResponse")]
+        System.Threading.Tasks.Task<bool> CheckNewSerialFormatAsync(string serial);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/CheckPrinteryFormat", ReplyAction="http://tempuri.org/IService1/CheckPrinteryFormatResponse")]
+        bool CheckPrinteryFormat(string print);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/CheckPrinteryFormat", ReplyAction="http://tempuri.org/IService1/CheckPrinteryFormatResponse")]
+        System.Threading.Tasks.Task<bool> CheckPrinteryFormatAsync(string print);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/getCountry", ReplyAction="http://tempuri.org/IService1/getCountryResponse")]
         string getCountry(string serial, string lang);
@@ -173,6 +206,36 @@ namespace ServiceReference1
         public System.Threading.Tasks.Task<bool> CheckNewSerialAsync(string serial)
         {
             return base.Channel.CheckNewSerialAsync(serial);
+        }
+        
+        public bool CheckOldSerialFormat(string serial)
+        {
+            return base.Channel.CheckOldSerialFormat(serial);
+        }
+        
+        public System.Threading.Tasks.Task<bool> CheckOldSerialFormatAsync(string serial)
+        {
+            return base.Channel.CheckOldSerialFormatAsync(serial);
+        }
+        
+        public bool CheckNewSerialFormat(string serial)
+        {
+            return base.Channel.CheckNewSerialFormat(serial);
+        }
+        
+        public System.Threading.Tasks.Task<bool> CheckNewSerialFormatAsync(string serial)
+        {
+            return base.Channel.CheckNewSerialFormatAsync(serial);
+        }
+        
+        public bool CheckPrinteryFormat(string print)
+        {
+            return base.Channel.CheckPrinteryFormat(print);
+        }
+        
+        public System.Threading.Tasks.Task<bool> CheckPrinteryFormatAsync(string print)
+        {
+            return base.Channel.CheckPrinteryFormatAsync(print);
         }
         
         public string getCountry(string serial, string lang)

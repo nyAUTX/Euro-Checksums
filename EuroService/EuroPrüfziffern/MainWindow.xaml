@@ -1,20 +1,30 @@
-﻿<Window x:Class="EuroPrüfziffern.MainWindow"
+﻿<Window x:Name="window" x:Class="EuroPrüfziffern.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:EuroPrüfziffern"
         mc:Ignorable="d"
-        Title="Euro Prüfziffernkontrolle" Height="450" Width="800">
+        Title="Euro Prüfziffernkontrolle" Height="450" Width="1000" MinHeight="450" MinWidth="1000">
     <Grid>
-        <ComboBox x:Name="languageBox" HorizontalAlignment="Left" Margin="670,10,0,0" VerticalAlignment="Top" Width="120"/>
-        <Label Content="Alte Geldscheine prüfen" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Height="43" Width="212"/>
-        <Label Content="Seriennummer:&#xD;&#xA;" HorizontalAlignment="Left" Margin="21,53,0,0" VerticalAlignment="Top" Width="120"/>
-        <Label Content="Plattencode:" HorizontalAlignment="Left" Margin="21,100,0,0" VerticalAlignment="Top" Width="120"/>
-        <TextBox x:Name="serialNo" HorizontalAlignment="Left" Margin="141,58,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="120"/>
-        <TextBox x:Name="printCode" HorizontalAlignment="Left" Margin="141,104,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="120"/>
-        <Button x:Name="oldCheckButton" Content="Check" HorizontalAlignment="Left" Margin="296,71,0,0" VerticalAlignment="Top" Height="37" Width="76" Click="oldCheckButton_Click"/>
-        <Label x:Name="oldResults" Content="Label" HorizontalAlignment="Left" Margin="475,58,0,0" VerticalAlignment="Top" Height="64" Width="202"/>
+        <ComboBox x:Name="languageBox" HorizontalAlignment="Right" Margin="0,0,10,10" VerticalAlignment="Bottom" Width="120" SelectionChanged="languageBox_SelectionChanged"/>
+        <Label x:Name="oldTitle" Content="oldTitle" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Height="30" Width="212" FontWeight="Bold"/>
+        <Label x:Name="serialNo1" Content="serialNo&#xA;" HorizontalAlignment="Left" Margin="20,76,0,0" VerticalAlignment="Top" Width="120" Height="30"/>
+        <Label x:Name="printeryCode1" Content="printeryCode" HorizontalAlignment="Left" Margin="20,106,0,0" VerticalAlignment="Top" Width="120" Height="30"/>
+        <TextBox x:Name="serialNoOld" HorizontalAlignment="Left" Margin="140,82,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="95" ToolTip="Z6016220226" AutomationProperties.HelpText="Z6016220226"/>
+        <TextBox x:Name="printeryCodeOld" HorizontalAlignment="Left" Margin="140,112,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="65" ToolTip="R001H4" AutomationProperties.HelpText="R001H4"/>
+        <Button x:Name="checkButtonOld" Content="checkButtonOld" HorizontalAlignment="Left" Margin="20,154,0,0" VerticalAlignment="Top" Height="32" Width="215" Click="checkButtonOld_Click"/>
+        <Label x:Name="oldResults" Content="" HorizontalAlignment="Left" Margin="275,76,0,0" VerticalAlignment="Top" Height="110" Width="583"/>
+        <Label x:Name="oldDescription" Content="oldDescription" HorizontalAlignment="Left" Margin="10,40,0,0" VerticalAlignment="Top" Height="30" Width="390"/>
+        <Label x:Name="changeLanguage" Content="changeLanguage" HorizontalAlignment="Right" HorizontalContentAlignment="Right"  Margin="0,0,135,6" VerticalAlignment="Bottom" Height="30" Width="219"/>
+        <Label x:Name="newTitle" Content="newTitle" HorizontalAlignment="Left" Margin="10,199,0,0" VerticalAlignment="Top" Height="30" Width="212" FontWeight="Bold"/>
+        <Label x:Name="serialNo2" Content="serialNo&#xA;" HorizontalAlignment="Left" Margin="20,265,0,0" VerticalAlignment="Top" Width="120" Height="30"/>
+        <Label x:Name="printeryCode2" Content="printeryCode" HorizontalAlignment="Left" Margin="20,295,0,0" VerticalAlignment="Top" Width="120" Height="30"/>
+        <TextBox x:Name="serialNoNew" HorizontalAlignment="Left" Margin="140,271,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="95" ToolTip="ND6617057128" AutomationProperties.HelpText="ND6617057128"/>
+        <TextBox x:Name="printeryCodeNew" HorizontalAlignment="Left" Margin="140,301,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="65" ToolTip="N022F6" AutomationProperties.HelpText="N022F6"/>
+        <Button x:Name="checkButtonNew" Content="checkButtonNew" HorizontalAlignment="Left" Margin="20,343,0,0" VerticalAlignment="Top" Height="32" Width="215" Click="checkButtonNew_Click"/>
+        <Label x:Name="newResults" Content="" HorizontalAlignment="Left" Margin="275,265,0,0" VerticalAlignment="Top" Height="110" Width="583"/>
+        <Label x:Name="newDescription" Content="newDescription" HorizontalAlignment="Left" Margin="10,229,0,0" VerticalAlignment="Top" Height="30" Width="390"/>
 
     </Grid>
 </Window>

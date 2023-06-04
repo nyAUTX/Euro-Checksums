@@ -19,6 +19,12 @@ namespace EuroService
         [OperationContract]
         bool CheckNewSerial(string serial);
         [OperationContract]
+        bool CheckOldSerialFormat(string serial);
+        [OperationContract]
+        bool CheckNewSerialFormat(string serial);
+        [OperationContract]
+        bool CheckPrinteryFormat(string print);
+        [OperationContract]
         string getCountry(string serial, string lang);
         [OperationContract]
         Printery getNewPrintery(string serial, string lang);
@@ -39,5 +45,7 @@ namespace EuroService
         public string Country { get; set; }
         [DataMember]
         public string City { get; set; }
+        [DataMember]
+        public bool Circulation { get; set; }
     }
 }
