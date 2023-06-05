@@ -117,7 +117,8 @@ namespace EuroService
         // Get data
         public string getCountry(string serial, string lang)
         {
-            string query = "SELECT LCountries.name AS country FROM OldSeries " +
+            string query = 
+                "SELECT LCountries.name AS country FROM OldSeries " +
                 "JOIN Countries ON OldSeries.countryID = Countries.id " +
                 "JOIN LCountries ON Countries.id = LCountries.countryID " +
                 "JOIN Language ON LCountries.languageID = Language.languageID " +
@@ -243,9 +244,11 @@ namespace EuroService
 
         public string getMessage(string desc, string lang)
         {
-            string query = "SELECT text FROM LTexts JOIN Texts ON LTexts.textID = Texts.textID JOIN Language ON LTexts.languageID = Language.languageID WHERE Language.code = @Lang AND Texts.[desc] = @Desc;";
-
-            string text = string.Empty;
+            string query = 
+                "SELECT text FROM LTexts " +
+                "JOIN Texts ON LTexts.textID = Texts.textID " +
+                "JOIN Language ON LTexts.languageID = Language.languageID " +
+                "WHERE Language.code = @Lang AND Texts.[desc] = @Desc;";
 
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
@@ -262,7 +265,7 @@ namespace EuroService
 
                         if (reader.Read())
                         {
-                            text = reader["text"].ToString();
+                            return reader["text"].ToString();
                         }
                     }
                     catch (Exception ex)
@@ -272,7 +275,7 @@ namespace EuroService
                 }
             }
 
-            return text;
+            return null;
         }
 
         public Dictionary<string, string> GetAllLanguages()
