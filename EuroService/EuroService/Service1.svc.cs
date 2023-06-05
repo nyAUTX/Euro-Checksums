@@ -11,9 +11,7 @@ using System.Xml;
 
 namespace EuroService
 {
-    // NOTE: You can use the "Rename" command on the "Refactor" menu to change the class name "Service1" in code, svc and config file together.
-    // NOTE: In order to launch WCF Test Client for testing this service, please select Service1.svc or Service1.svc.cs at the Solution Explorer and start debugging.
-    public class Service1 : IService1
+     public class Service1 : IService1
     {
 
         string connectionString = "Data Source=localhost;Initial Catalog=Euro;Integrated Security=True;";
@@ -55,7 +53,6 @@ namespace EuroService
         {
             if (!CheckNewSerialFormat(serial))
             {
-                // Serial length should be 12 characters
                 return false;
             }
 
@@ -82,7 +79,8 @@ namespace EuroService
             
             return checksum == lastNumber;
         }
-
+        
+        // Check Formats
         public bool CheckOldSerialFormat(string serial)
         {
             if (serial.Length != 12
@@ -93,6 +91,7 @@ namespace EuroService
             }
             return true;
         }
+        
         public bool CheckNewSerialFormat(string serial)
         {
             if (serial.Length != 12
@@ -104,6 +103,7 @@ namespace EuroService
             }
             return true;
         }
+        
         public bool CheckPrinteryFormat(string print)
         {
             if (print.Length != 6
@@ -114,11 +114,14 @@ namespace EuroService
             return true;
         }
 
+        // Get data
         public string getCountry(string serial, string lang)
         {
-            string query = "SELECT LCountries.name AS country FROM OldSeries JOIN Countries ON OldSeries.countryID = Countries.id JOIN LCountries ON Countries.id = LCountries.countryID JOIN Language ON LCountries.languageID = Language.languageID WHERE OldSeries.code = @Code AND Language.code = @Lang;";
-
-            string message = null;
+            string query = "SELECT LCountries.name AS country FROM OldSeries " +
+                "JOIN Countries ON OldSeries.countryID = Countries.id " +
+                "JOIN LCountries ON Countries.id = LCountries.countryID " +
+                "JOIN Language ON LCountries.languageID = Language.languageID " +
+                "WHERE OldSeries.code = @Code AND Language.code = @Lang;";
 
             // Create a new SqlConnection and SqlCommand
             using (SqlConnection connection = new SqlConnection(connectionString))
@@ -136,7 +139,7 @@ namespace EuroService
                         {
                             if (reader.Read())
                             {
-                                message = reader["country"].ToString();
+                                return reader["country"].ToString();
                             }
                         }
                     }
@@ -147,14 +150,21 @@ namespace EuroService
                 }
             }
 
-            return message;
+            return null;
         }
         
         public Printery getNewPrintery(string serial, string lang)
         {
             Printery printery = new Printery();
             
-            string query = "SELECT EuropeSeries.printery AS printery_name, LCities.name AS city, LCountries.name AS country, EuropeSeries.circulation FROM EuropeSeries JOIN Cities ON EuropeSeries.cityID = Cities.id JOIN LCities ON Cities.id = LCities.cityID JOIN Countries ON EuropeSeries.countryID = Countries.id JOIN LCountries ON Countries.id = LCountries.countryID JOIN Language ON LCities.languageID = Language.languageID AND LCountries.languageID = Language.languageID WHERE EuropeSeries.code = @Code AND Language.code = @Lang;";
+            string query = 
+                "SELECT EuropeSeries.printery AS printery_name, LCities.name AS city, LCountries.name AS country, EuropeSeries.circulation FROM EuropeSeries " +
+                "JOIN Cities ON EuropeSeries.cityID = Cities.id " +
+                "JOIN LCities ON Cities.id = LCities.cityID " +
+                "JOIN Countries ON EuropeSeries.countryID = Countries.id " +
+                "JOIN LCountries ON Countries.id = LCountries.countryID " +
+                "JOIN Language ON LCities.languageID = Language.languageID AND LCountries.languageID = Language.languageID " +
+                "WHERE EuropeSeries.code = @Code AND Language.code = @Lang;";
 
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
@@ -191,7 +201,14 @@ namespace EuroService
         {
             Printery printery = new Printery();
             
-            string query = "SELECT Printery.name AS printery_name, LCities.name AS city, LCountries.name AS country, Printery.circulation FROM Printery JOIN Cities ON Printery.cityID = Cities.id JOIN LCities ON Cities.id = LCities.cityID JOIN Countries ON Printery.countryID = Countries.id JOIN LCountries ON Countries.id = LCountries.countryID JOIN Language ON LCities.languageID = Language.languageID AND LCountries.languageID = Language.languageID WHERE Printery.code = @Code AND Language.code = @Lang;";
+            string query = 
+                "SELECT Printery.name AS printery_name, LCities.name AS city, LCountries.name AS country, Printery.circulation FROM Printery " +
+                "JOIN Cities ON Printery.cityID = Cities.id " +
+                "JOIN LCities ON Cities.id = LCities.cityID " +
+                "JOIN Countries ON Printery.countryID = Countries.id " +
+                "JOIN LCountries ON Countries.id = LCountries.countryID " +
+                "JOIN Language ON LCities.languageID = Language.languageID AND LCountries.languageID = Language.languageID " +
+                "WHERE Printery.code = @Code AND Language.code = @Lang;";
 
             using (SqlConnection connection = new SqlConnection(connectionString))
             {

@@ -5,14 +5,14 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:EuroPrüfziffern"
         mc:Ignorable="d"
-        Title="Euro Prüfziffernkontrolle" Height="475" Width="1000" MinHeight="475" MinWidth="1000">
+        Title="Euro Prüfziffernkontrolle" Height="475" Width="1000" MinHeight="475" MinWidth="1000" Icon="/cash_icon-icons.com_51090.ico">
     <Grid>
         <ComboBox x:Name="languageBox" HorizontalAlignment="Right" Margin="0,0,10,10" VerticalAlignment="Bottom" Width="120" SelectionChanged="languageBox_SelectionChanged"/>
         <Label x:Name="oldTitle" Content="oldTitle" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Height="30" Width="212" FontWeight="Bold"/>
         <Label x:Name="serialNo1" Content="serialNo&#xA;" HorizontalAlignment="Left" Margin="20,76,0,0" VerticalAlignment="Top" Width="120" Height="30"/>
         <Label x:Name="printeryCode1" Content="printeryCode" HorizontalAlignment="Left" Margin="20,106,0,0" VerticalAlignment="Top" Width="120" Height="30"/>
-        <TextBox x:Name="serialNoOld" HorizontalAlignment="Left" Margin="140,82,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="95" ToolTip="Z6016220226" AutomationProperties.HelpText="Z6016220226"/>
-        <TextBox x:Name="printeryCodeOld" HorizontalAlignment="Left" Margin="140,112,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="65" ToolTip="R001H4" AutomationProperties.HelpText="R001H4"/>
+        <TextBox x:Name="serialNoOld" HorizontalAlignment="Left" Margin="140,82,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="95" ToolTip="Z60162200226" AutomationProperties.HelpText="Z60162200226"/>
+        <TextBox x:Name="printeryCodeOld" HorizontalAlignment="Left" Margin="140,112,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="65" ToolTip="T003G1" AutomationProperties.HelpText="T003G1"/>
         <Button x:Name="checkButtonOld" Content="checkButtonOld" HorizontalAlignment="Left" Margin="20,154,0,0" VerticalAlignment="Top" Height="32" Width="215" Click="checkButtonOld_Click"/>
         <Label x:Name="oldResults" Content="" HorizontalAlignment="Left" Margin="275,76,0,0" VerticalAlignment="Top" Height="110" Width="583"/>
         <Label x:Name="oldDescription" Content="oldDescription" HorizontalAlignment="Left" Margin="10,40,0,0" VerticalAlignment="Top" Height="30" Width="390"/>
