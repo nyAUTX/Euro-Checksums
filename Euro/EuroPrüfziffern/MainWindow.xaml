@@ -4,29 +4,83 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:EuroPrüfziffern"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         mc:Ignorable="d"
-        Title="Euro Prüfziffernkontrolle" Height="475" Width="1000" MinHeight="475" MinWidth="1000" Icon="/cash_icon-icons.com_51090.ico">
+        Title="Euro Prüfziffernkontrolle" Height="600" Width="900" MinHeight="600" MinWidth="900" Icon="/cash_icon-icons.com_51090.ico">
     <Grid>
-        <ComboBox x:Name="languageBox" HorizontalAlignment="Right" Margin="0,0,10,10" VerticalAlignment="Bottom" Width="120" SelectionChanged="languageBox_SelectionChanged"/>
-        <Label x:Name="oldTitle" Content="oldTitle" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Height="30" Width="212" FontWeight="Bold"/>
-        <Label x:Name="serialNo1" Content="serialNo&#xA;" HorizontalAlignment="Left" Margin="20,76,0,0" VerticalAlignment="Top" Width="120" Height="30"/>
-        <Label x:Name="printeryCode1" Content="printeryCode" HorizontalAlignment="Left" Margin="20,106,0,0" VerticalAlignment="Top" Width="120" Height="30"/>
-        <TextBox x:Name="serialNoOld" HorizontalAlignment="Left" Margin="140,82,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="95" ToolTip="Z60162200226" AutomationProperties.HelpText="Z60162200226" Style="{StaticResource MaterialDesignFilledTextBox}" Padding="0"/>
-        <TextBox x:Name="printeryCodeOld" HorizontalAlignment="Left" Margin="140,112,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="65" ToolTip="T003G1" AutomationProperties.HelpText="T003G1" Style="{StaticResource MaterialDesignFilledTextBox}" Padding="0"/>
-        <Button x:Name="checkButtonOld" Content="checkButtonOld" HorizontalAlignment="Left" Margin="20,154,0,0" VerticalAlignment="Top" Height="32" Width="215" Click="checkButtonOld_Click"/>
-        <Label x:Name="oldResults" Content="" HorizontalAlignment="Left" Margin="275,76,0,0" VerticalAlignment="Top" Height="110" Width="583"/>
-        <Label x:Name="oldDescription" Content="oldDescription" HorizontalAlignment="Left" Margin="10,40,0,0" VerticalAlignment="Top" Height="30" Width="390"/>
-        <Label x:Name="changeLanguage" Content="changeLanguage" HorizontalAlignment="Right" HorizontalContentAlignment="Right"  Margin="0,0,135,6" VerticalAlignment="Bottom" Height="30" Width="219"/>
-        <Label x:Name="newTitle" Content="newTitle" HorizontalAlignment="Left" Margin="10,199,0,0" VerticalAlignment="Top" Height="30" Width="212" FontWeight="Bold"/>
-        <Label x:Name="serialNo2" Content="serialNo&#xA;" HorizontalAlignment="Left" Margin="20,265,0,0" VerticalAlignment="Top" Width="120" Height="30"/>
-        <Label x:Name="printeryCode2" Content="printeryCode" HorizontalAlignment="Left" Margin="20,295,0,0" VerticalAlignment="Top" Width="120" Height="30"/>
-        <TextBox x:Name="serialNoNew" HorizontalAlignment="Left" Margin="140,271,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="95" ToolTip="ND6617057128" AutomationProperties.HelpText="ND6617057128" Style="{StaticResource MaterialDesignFilledTextBox}" Padding="0"/>
-        <TextBox x:Name="printeryCodeNew" HorizontalAlignment="Left" Margin="140,301,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="65" ToolTip="N022F6" AutomationProperties.HelpText="N022F6" Style="{StaticResource MaterialDesignFilledTextBox}" Padding="0"/>
-        <Button x:Name="checkButtonNew" Content="checkButtonNew" HorizontalAlignment="Left" Margin="20,343,0,0" VerticalAlignment="Top" Height="32" Width="215" Click="checkButtonNew_Click"/>
-        <Label x:Name="newResults" Content="" HorizontalAlignment="Left" Margin="275,265,0,0" VerticalAlignment="Top" Height="110" Width="583"/>
-        <Label x:Name="newDescription" Content="newDescription" HorizontalAlignment="Left" Margin="10,229,0,0" VerticalAlignment="Top" Height="30" Width="390"/>
-        <Separator HorizontalAlignment="Left" Margin="15,190,0,0" VerticalAlignment="Top" BorderBrush="Black" Height="10" Width="960"/>
-        <Separator HorizontalAlignment="Left" Margin="15,380,0,0" VerticalAlignment="Top" BorderBrush="Black" Height="10" Width="960"/>
-
+        <DockPanel>
+            <StackPanel DockPanel.Dock="Bottom" HorizontalAlignment="Stretch" Margin="10">
+                <Separator />
+                <StackPanel  Orientation="Horizontal" HorizontalAlignment="Right">
+                    <Label x:Name="changeLanguage" Content="changeLanguage" HorizontalContentAlignment="Right" Height="30" Width="219"/>
+                    <ComboBox x:Name="languageBox" Margin="10 0 0 0" Width="120" SelectionChanged="languageBox_SelectionChanged"/>
+                </StackPanel>
+            </StackPanel>
+            <StackPanel HorizontalAlignment="Stretch" Margin="10">
+                <Label x:Name="oldTitle" HorizontalAlignment="Left" Content="oldTitle" Height="30" Width="212" FontWeight="Bold"/>
+                <Label x:Name="oldDescription" HorizontalAlignment="Left" Content="oldDescription" Height="30" Width="390"/>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="auto"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid Margin="20">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="auto"/>
+                            <ColumnDefinition Width="auto"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                        </Grid.RowDefinitions>
+                        <Label x:Name="serialNo1" Content="serialNo&#xA;" Width="120" Height="30" Margin="5"/>
+                        <Label Grid.Row="1" x:Name="printeryCode1" Content="printeryCode" Width="120" Height="30" Margin="5"/>
+                        <TextBox Grid.Column="1" x:Name="serialNoOld" TextWrapping="Wrap" Width="95" ToolTip="Z60162200226" Margin="5" HorizontalAlignment="Left" AutomationProperties.HelpText="Z60162200226" Style="{StaticResource MaterialDesignFilledTextBox}" Padding="0"/>
+                        <TextBox Grid.Column="1" Grid.Row="1" x:Name="printeryCodeOld" TextWrapping="Wrap" Width="65" ToolTip="T003G1" Margin="5" HorizontalAlignment="Left" AutomationProperties.HelpText="T003G1" Style="{StaticResource MaterialDesignFilledTextBox}" Padding="0"/>
+                        <Button Grid.Row="2" Grid.ColumnSpan="2" x:Name="checkButtonOld" Content="checkButtonOld" HorizontalAlignment="stretch" Click="checkButtonOld_Click" />
+                    </Grid>
+                    <materialDesign:Card Grid.Column="1"
+                                         HorizontalAlignment="Stretch"
+                                         Padding="8"
+                        Background="{DynamicResource PrimaryHueLightBrush}"
+                        Foreground="{DynamicResource PrimaryHueLightForegroundBrush}">
+                        <Label x:Name="oldResults" Content="" HorizontalAlignment="Stretch"/>
+                    </materialDesign:Card>
+                </Grid>
+                <Separator Margin="0 20"/>
+                <Label x:Name="newTitle" HorizontalAlignment="Left" Content="oldTitle" Height="30" Width="212" FontWeight="Bold"/>
+                <Label x:Name="newDescription" HorizontalAlignment="Left" Content="oldDescription" Height="30" Width="390"/>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="auto"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid Margin="20">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="auto"/>
+                            <ColumnDefinition Width="auto"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                        </Grid.RowDefinitions>
+                        <Label x:Name="serialNo2" Content="serialNo&#xA;" Width="120" Height="30" Margin="5"/>
+                        <Label Grid.Row="1" x:Name="printeryCode2" Content="printeryCode" Width="120" Height="30" Margin="5"/>
+                        <TextBox Grid.Column="1" x:Name="serialNoNew" TextWrapping="Wrap" Width="95" ToolTip="Z60162200226" Margin="5" HorizontalAlignment="Left" AutomationProperties.HelpText="Z60162200226" Style="{StaticResource MaterialDesignFilledTextBox}" Padding="0"/>
+                        <TextBox Grid.Column="1" Grid.Row="1" x:Name="printeryCodeNew" TextWrapping="Wrap" Width="65" ToolTip="T003G1" Margin="5" HorizontalAlignment="Left" AutomationProperties.HelpText="T003G1" Style="{StaticResource MaterialDesignFilledTextBox}" Padding="0"/>
+                        <Button Grid.Row="2" Grid.ColumnSpan="2" x:Name="checkButtonNew" Content="checkButtonNew" HorizontalAlignment="stretch" Click="checkButtonOld_Click" />
+                    </Grid>
+                    <materialDesign:Card Grid.Column="1"
+                                         HorizontalAlignment="Stretch"
+                                         Padding="8"
+                                         Background="{DynamicResource PrimaryHueLightBrush}"
+                                         Foreground="{DynamicResource PrimaryHueLightForegroundBrush}">
+                        <Label x:Name="newResults" Content="" HorizontalAlignment="Stretch"/>
+                    </materialDesign:Card>
+                </Grid>
+            </StackPanel>
+        </DockPanel>
     </Grid>
 </Window>
