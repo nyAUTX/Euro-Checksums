@@ -1,7 +1,0 @@
-C:\GIT\pruefsummen-euro\EuroService\EuroService\bin\EuroService.dll.config
-C:\GIT\pruefsummen-euro\EuroService\EuroService\bin\EuroService.dll
-C:\GIT\pruefsummen-euro\EuroService\EuroService\bin\EuroService.pdb
-C:\GIT\pruefsummen-euro\EuroService\EuroService\obj\Debug\EuroService.csproj.AssemblyReference.cache
-C:\GIT\pruefsummen-euro\EuroService\EuroService\obj\Debug\EuroService.csproj.CoreCompileInputs.cache
-C:\GIT\pruefsummen-euro\EuroService\EuroService\obj\Debug\EuroService.dll
-C:\GIT\pruefsummen-euro\EuroService\EuroService\obj\Debug\EuroService.pdb
