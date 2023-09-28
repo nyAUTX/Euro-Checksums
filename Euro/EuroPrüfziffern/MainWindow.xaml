@@ -6,80 +6,155 @@
         xmlns:local="clr-namespace:EuroPrüfziffern"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         mc:Ignorable="d"
-        Title="Euro Prüfziffernkontrolle" Height="600" Width="900" MinHeight="600" MinWidth="900" Icon="/cash_icon-icons.com_51090.ico">
+        Title="Euro Prüfziffernkontrolle" Height="600" Width="900" MinHeight="600" MinWidth="900"
+        Icon="/cash_icon-icons.com_51090.ico">
     <Grid>
         <DockPanel>
+
+            <!--#region Languageoptions -->
             <StackPanel DockPanel.Dock="Bottom" HorizontalAlignment="Stretch" Margin="10">
                 <Separator />
-                <StackPanel  Orientation="Horizontal" HorizontalAlignment="Right">
-                    <Label x:Name="changeLanguage" Content="changeLanguage" HorizontalContentAlignment="Right" Height="30" Width="219"/>
-                    <ComboBox x:Name="languageBox" Margin="10 0 0 0" Width="120" SelectionChanged="languageBox_SelectionChanged"/>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                    <Label x:Name="changeLanguage" Content="changeLanguage" HorizontalContentAlignment="Right"
+                           Height="30" Width="219" />
+                    <ComboBox x:Name="languageBox" Margin="10 0 0 0" Width="120"
+                              SelectionChanged="languageBox_SelectionChanged" />
                 </StackPanel>
             </StackPanel>
+            <!--#endregion -->
+
             <StackPanel HorizontalAlignment="Stretch" Margin="10">
-                <Label x:Name="oldTitle" HorizontalAlignment="Left" Content="oldTitle" Height="30" Width="212" FontWeight="Bold"/>
-                <Label x:Name="oldDescription" HorizontalAlignment="Left" Content="oldDescription" Height="30" Width="390"/>
+
+                <!--#region old Euro-->
+                <Label x:Name="oldTitle" HorizontalAlignment="Left" Content="oldTitle" Height="30" Width="212"
+                       FontWeight="Bold" />
+                <Label x:Name="oldDescription" HorizontalAlignment="Left" Content="oldDescription" Height="30"
+                       Width="390" />
                 <Grid>
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="auto"/>
-                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="auto" />
+                        <ColumnDefinition Width="*" />
                     </Grid.ColumnDefinitions>
                     <Grid Margin="20">
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="auto"/>
-                            <ColumnDefinition Width="auto"/>
+                            <ColumnDefinition Width="auto" />
+                            <ColumnDefinition Width="auto" />
                         </Grid.ColumnDefinitions>
                         <Grid.RowDefinitions>
                             <RowDefinition></RowDefinition>
                             <RowDefinition></RowDefinition>
                             <RowDefinition></RowDefinition>
                         </Grid.RowDefinitions>
-                        <Label x:Name="serialNo1" Content="serialNo&#xA;" Width="120" Height="30" Margin="5"/>
-                        <Label Grid.Row="1" x:Name="printeryCode1" Content="printeryCode" Width="120" Height="30" Margin="5"/>
-                        <TextBox Grid.Column="1" x:Name="serialNoOld" TextWrapping="Wrap" Width="95" ToolTip="Z60162200226" Margin="5" HorizontalAlignment="Left" AutomationProperties.HelpText="Z60162200226" Style="{StaticResource MaterialDesignFilledTextBox}" Padding="0"/>
-                        <TextBox Grid.Column="1" Grid.Row="1" x:Name="printeryCodeOld" TextWrapping="Wrap" Width="65" ToolTip="T003G1" Margin="5" HorizontalAlignment="Left" AutomationProperties.HelpText="T003G1" Style="{StaticResource MaterialDesignFilledTextBox}" Padding="0"/>
-                        <Button Grid.Row="2" Grid.ColumnSpan="2" x:Name="checkButtonOld" Content="checkButtonOld" HorizontalAlignment="stretch" Click="checkButtonOld_Click" />
+                        <Label x:Name="serialNo1" Content="serialNo&#xA;" Width="120" Height="30" Margin="5" />
+                        <Label Grid.Row="1" x:Name="printeryCode1" Content="printeryCode" Width="120" Height="30"
+                               Margin="5" />
+                        <TextBox Grid.Column="1" x:Name="serialNoOld" TextWrapping="Wrap" Width="95"
+                                 ToolTip="Z60162200226" Margin="5" HorizontalAlignment="Left"
+                                 AutomationProperties.HelpText="Z60162200226"
+                                 Style="{StaticResource MaterialDesignFilledTextBox}" Padding="0" />
+                        <TextBox Grid.Column="1" Grid.Row="1" x:Name="printeryCodeOld" TextWrapping="Wrap" Width="65"
+                                 ToolTip="T003G1" Margin="5" HorizontalAlignment="Left"
+                                 AutomationProperties.HelpText="T003G1"
+                                 Style="{StaticResource MaterialDesignFilledTextBox}" Padding="0" />
+                        <Button Grid.Row="2" Grid.ColumnSpan="2" x:Name="checkButtonOld" Content="checkButtonOld"
+                                HorizontalAlignment="stretch" Click="checkButtonOld_Click" />
                     </Grid>
-                    <materialDesign:Card Grid.Column="1"
-                                         HorizontalAlignment="Stretch"
-                                         Padding="8"
-                        Background="{DynamicResource PrimaryHueLightBrush}"
-                        Foreground="{DynamicResource PrimaryHueLightForegroundBrush}">
-                        <Label x:Name="oldResults" Content="" HorizontalAlignment="Stretch"/>
-                    </materialDesign:Card>
+                    <GroupBox Grid.Column="1"
+                              x:Name="oldGroupBox"
+                              materialDesign:ColorZoneAssist.Mode="Custom"
+                              materialDesign:ColorZoneAssist.Background="White"
+                              materialDesign:ColorZoneAssist.Foreground="White"
+                              Header="oldGroupBox"
+                              Style="{StaticResource MaterialDesignCardGroupBox}">
+                        <GroupBox.HeaderTemplate>
+                            <DataTemplate>
+                                <StackPanel
+                                    Orientation="Horizontal">
+                                    <materialDesign:PackIcon
+                                        Width="24"
+                                        Height="24"
+                                        VerticalAlignment="Center"
+                                        x:Name="oldIcon"
+                                        Kind="InformationOutline" />
+                                    <TextBlock
+                                        Margin="8,0,0,0"
+                                        VerticalAlignment="Center"
+                                        Style="{StaticResource MaterialDesignSubtitle1TextBlock}"
+                                        Text="{Binding}" />
+                                </StackPanel>
+                            </DataTemplate>
+                        </GroupBox.HeaderTemplate>
+                        <Label x:Name="oldResults" Content="" HorizontalAlignment="Stretch" />
+                    </GroupBox>
                 </Grid>
-                <Separator Margin="0 20"/>
-                <Label x:Name="newTitle" HorizontalAlignment="Left" Content="oldTitle" Height="30" Width="212" FontWeight="Bold"/>
-                <Label x:Name="newDescription" HorizontalAlignment="Left" Content="oldDescription" Height="30" Width="390"/>
+                <!--#endregion -->
+
+                <Separator Margin="0 20" />
+
+                <!--#region new Euro -->
+                <Label x:Name="newTitle" HorizontalAlignment="Left" Content="oldTitle" Height="30" Width="212"
+                       FontWeight="Bold" />
+                <Label x:Name="newDescription" HorizontalAlignment="Left" Content="oldDescription" Height="30"
+                       Width="390" />
                 <Grid>
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="auto"/>
-                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="auto" />
+                        <ColumnDefinition Width="*" />
                     </Grid.ColumnDefinitions>
                     <Grid Margin="20">
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="auto"/>
-                            <ColumnDefinition Width="auto"/>
+                            <ColumnDefinition Width="auto" />
+                            <ColumnDefinition Width="auto" />
                         </Grid.ColumnDefinitions>
                         <Grid.RowDefinitions>
                             <RowDefinition></RowDefinition>
                             <RowDefinition></RowDefinition>
                             <RowDefinition></RowDefinition>
                         </Grid.RowDefinitions>
-                        <Label x:Name="serialNo2" Content="serialNo&#xA;" Width="120" Height="30" Margin="5"/>
-                        <Label Grid.Row="1" x:Name="printeryCode2" Content="printeryCode" Width="120" Height="30" Margin="5"/>
-                        <TextBox Grid.Column="1" x:Name="serialNoNew" TextWrapping="Wrap" Width="95" ToolTip="Z60162200226" Margin="5" HorizontalAlignment="Left" AutomationProperties.HelpText="Z60162200226" Style="{StaticResource MaterialDesignFilledTextBox}" Padding="0"/>
-                        <TextBox Grid.Column="1" Grid.Row="1" x:Name="printeryCodeNew" TextWrapping="Wrap" Width="65" ToolTip="T003G1" Margin="5" HorizontalAlignment="Left" AutomationProperties.HelpText="T003G1" Style="{StaticResource MaterialDesignFilledTextBox}" Padding="0"/>
-                        <Button Grid.Row="2" Grid.ColumnSpan="2" x:Name="checkButtonNew" Content="checkButtonNew" HorizontalAlignment="stretch" Click="checkButtonOld_Click" />
+                        <Label x:Name="serialNo2" Content="serialNo&#xA;" Width="120" Height="30" Margin="5" />
+                        <Label Grid.Row="1" x:Name="printeryCode2" Content="printeryCode" Width="120" Height="30"
+                               Margin="5" />
+                        <TextBox Grid.Column="1" x:Name="serialNoNew" TextWrapping="Wrap" Width="95"
+                                 ToolTip="ND6617057128" Margin="5" HorizontalAlignment="Left"
+                                 AutomationProperties.HelpText="ND6617057128"
+                                 Style="{StaticResource MaterialDesignFilledTextBox}" Padding="0" />
+                        <TextBox Grid.Column="1" Grid.Row="1" x:Name="printeryCodeNew" TextWrapping="Wrap" Width="65"
+                                 ToolTip="N022F6" Margin="5" HorizontalAlignment="Left"
+                                 AutomationProperties.HelpText="N022F6"
+                                 Style="{StaticResource MaterialDesignFilledTextBox}" Padding="0" />
+                        <Button Grid.Row="2" Grid.ColumnSpan="2" x:Name="checkButtonNew" Content="checkButtonNew"
+                                HorizontalAlignment="stretch" Click="checkButtonNew_Click" />
                     </Grid>
-                    <materialDesign:Card Grid.Column="1"
-                                         HorizontalAlignment="Stretch"
-                                         Padding="8"
-                                         Background="{DynamicResource PrimaryHueLightBrush}"
-                                         Foreground="{DynamicResource PrimaryHueLightForegroundBrush}">
-                        <Label x:Name="newResults" Content="" HorizontalAlignment="Stretch"/>
-                    </materialDesign:Card>
+                    <GroupBox Grid.Column="1"
+                              x:Name="newGroupBox"
+                              materialDesign:ColorZoneAssist.Mode="Custom"
+                              materialDesign:ColorZoneAssist.Background="White"
+                              materialDesign:ColorZoneAssist.Foreground="White"
+                              Header="oldGroupBox"
+                              Style="{StaticResource MaterialDesignCardGroupBox}">
+                        <GroupBox.HeaderTemplate>
+                            <DataTemplate>
+                                <StackPanel
+                                    Orientation="Horizontal">
+                                    <materialDesign:PackIcon
+                                        Width="24"
+                                        Height="24"
+                                        VerticalAlignment="Center"
+                                        x:Name="newIcon"
+                                        Kind="InformationOutline" />
+                                    <TextBlock
+                                        Margin="8,0,0,0"
+                                        VerticalAlignment="Center"
+                                        Style="{StaticResource MaterialDesignSubtitle1TextBlock}"
+                                        Text="{Binding}" />
+                                </StackPanel>
+                            </DataTemplate>
+                        </GroupBox.HeaderTemplate>
+                        <Label x:Name="newResults" Content="" HorizontalAlignment="Stretch" />
+                    </GroupBox>
                 </Grid>
+                <!--#endregion-->
+
             </StackPanel>
         </DockPanel>
     </Grid>

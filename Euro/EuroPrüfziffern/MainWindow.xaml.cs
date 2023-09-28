@@ -1,156 +1,223 @@
 ﻿using ServiceReference1;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Media;
+using MaterialDesignThemes.Wpf;
 
 namespace EuroPrüfziffern
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class MainWindow : INotifyPropertyChanged
     {
+        private readonly Service1Client _client = new(Service1Client.EndpointConfiguration.BasicHttpBinding_IService1);
 
-        ServiceReference1.Service1Client client = new ServiceReference1.Service1Client(ServiceReference1.Service1Client.EndpointConfiguration.BasicHttpBinding_IService1);
 
-        
         public MainWindow()
         {
             InitializeComponent();
-            Dictionary<string, string> languages = client.GetAllLanguages();
+            Dictionary<string, string> languages = _client.GetAllLanguages();
 
             languageBox.ItemsSource = languages;
             languageBox.DisplayMemberPath = "Value"; // zb: Deutsch
-            languageBox.SelectedValuePath = "Key";   // zb: deu
+            languageBox.SelectedValuePath = "Key"; // zb: deu
             languageBox.SelectedIndex = 0;
 
-            setTexts();
+            SetTexts();
         }
-        
-        public void setTexts()
+
+        #region Texts
+
+        private void SetTexts()
         {
-            window.Title = getText("title");
-            oldTitle.Content = getText(oldTitle.Name);
-            newTitle.Content = getText(newTitle.Name);
-            oldDescription.Content = getText(oldDescription.Name);
-            newDescription.Content = getText(newDescription.Name);
-            serialNo1.Content = getText("serialNo") + ":";
-            serialNo2.Content = getText("serialNo") + ":";
-            printeryCode1.Content = getText("printeryCode") + ":";
-            printeryCode2.Content = getText("printeryCode") + ":";
-            checkButtonOld.Content = getText("checkButton");
-            checkButtonNew.Content = getText("checkButton");
-            changeLanguage.Content = getText(changeLanguage.Name) + ":";
+            window.Title = GetText("title");
+            oldTitle.Content = GetText(oldTitle.Name);
+            newTitle.Content = GetText(newTitle.Name);
+            oldDescription.Content = GetText(oldDescription.Name);
+            newDescription.Content = GetText(newDescription.Name);
+            serialNo1.Content = GetText("serialNo") + ":";
+            serialNo2.Content = GetText("serialNo") + ":";
+            printeryCode1.Content = GetText("printeryCode") + ":";
+            printeryCode2.Content = GetText("printeryCode") + ":";
+            checkButtonOld.Content = GetText("checkButton");
+            checkButtonNew.Content = GetText("checkButton");
+            changeLanguage.Content = GetText(changeLanguage.Name) + ":";
         }
-        
-        public string getText(string desc)
+
+        private string GetText(string desc)
         {
-            return client.getMessage(desc, languageBox.SelectedValue.ToString());
+            return _client.getMessage(desc, languageBox.SelectedValue.ToString());
         }
+
+        #endregion
 
         private void languageBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            oldResults.Content = "";
-            newResults.Content = "";
-            setTexts();
+            SetOld("clear");
+            SetNew("clear");
+            SetTexts();
         }
+
+        #region old Euro
 
         private void checkButtonOld_Click(object sender, RoutedEventArgs e)
         {
             oldResults.Content = "";
-            if(!client.CheckOldSerialFormat(serialNoOld.Text))
+            if (!_client.CheckOldSerialFormat(serialNoOld.Text))
             {
-                oldResults.Content = getText("error") + ": " + getText("serialFormatError") + "\n";
+                oldResults.Content = GetText("error") + ": " + GetText("serialFormatError") + "\n";
             }
-            
-            if(!client.CheckPrinteryFormat(printeryCodeOld.Text))
+
+            if (!_client.CheckPrinteryFormat(printeryCodeOld.Text))
             {
-                oldResults.Content += getText("error") + ": " + getText("printeryFormatError") + "\n";
+                oldResults.Content += GetText("error") + ": " + GetText("printeryFormatError") + "\n";
             }
-            
-            if(!oldResults.Content.Equals(""))
+
+            if (!oldResults.Content.Equals(""))
             {
-                oldResults.Content = getText("invalidSerial") + "\n\n" + oldResults.Content;
+                SetOld("error");
                 return;
             }
-            
-            if (client.CheckOldSerial(serialNoOld.Text))
+
+            if (_client.CheckOldSerial(serialNoOld.Text))
             {
-                Printery printery = client.getOldPrintery(printeryCodeOld.Text, languageBox.SelectedValue.ToString());
-                string country = client.getCountry(serialNoOld.Text, languageBox.SelectedValue.ToString());
+                Printery printery = _client.getOldPrintery(printeryCodeOld.Text, languageBox.SelectedValue.ToString());
+                var country = _client.getCountry(serialNoOld.Text, languageBox.SelectedValue.ToString());
                 if (printery.Name != null && country != null)
                 {
-                    oldResults.Content += getText("validSerial") + "\n\n";
-                    oldResults.Content += getText("oldCountryResult") + ": " + country + "\n";
-                    oldResults.Content += getText("oldPrinteryResult") + ": ";
+                    SetOld("valid");
+                    oldResults.Content += GetText("oldCountryResult") + ": " + country + "\n";
+                    oldResults.Content += GetText("oldPrinteryResult") + ": ";
                     oldResults.Content += printery.Name + " (" + printery.City + ", " + printery.Country + ")\n";
-                    if (!printery.Circulation)
-                    {
-                        oldResults.Content += getText("warning") + ": " + getText("circulationWarning");
-                    }
+
+                    if (printery.Circulation) return;
+
+                    SetOld("warning");
+                    oldResults.Content += GetText("warning") + ": " + GetText("circulationWarning");
                 }
                 else
                 {
-                    oldResults.Content = getText("invalidSerial") + "\n\n" + getText("noDataError");
+                    SetOld("error");
+                    oldResults.Content = GetText("error") + ": " + GetText("noDataError");
                 }
-
             }
 
             else
             {
-                oldResults.Content = getText("invalidSerial") + "\n\n";
-                oldResults.Content += getText("error") + ": " + getText("serialInvalidError");
+                SetOld("error");
+                oldResults.Content += GetText("error") + ": " + GetText("serialInvalidError");
             }
         }
-        
+
+        private void SetOld(string type)
+        {
+            switch (type)
+            {
+                case "error":
+                    oldGroupBox.Header = GetText("invalidSerial");
+                    ColorZoneAssist.SetBackground(oldGroupBox, Brushes.Red);
+                    break;
+                case "valid":
+                    oldGroupBox.Header = GetText("validSerial");
+                    ColorZoneAssist.SetBackground(oldGroupBox, Brushes.Green);
+                    break;
+                case "warning":
+                    ColorZoneAssist.SetBackground(oldGroupBox, Brushes.Orange);
+                    break;
+                case "clear":
+                    ColorZoneAssist.SetBackground(oldGroupBox, Brushes.White);
+                    oldResults.Content = "";
+                    break;
+            }
+        }
+
+        #endregion
+
+        #region new Euro
+
         private void checkButtonNew_Click(object sender, RoutedEventArgs e)
         {
             newResults.Content = "";
-            if (!client.CheckNewSerialFormat(serialNoNew.Text))
+            if (!_client.CheckNewSerialFormat(serialNoNew.Text))
             {
-                newResults.Content = getText("error") + ": " + getText("serialFormatError") + "\n";
+                newResults.Content = GetText("error") + ": " + GetText("serialFormatError") + "\n";
             }
 
-            if (!client.CheckPrinteryFormat(printeryCodeNew.Text))
+            if (!_client.CheckPrinteryFormat(printeryCodeNew.Text))
             {
-                newResults.Content += getText("error") + ": " + getText("printeryFormatError") + "\n";
+                newResults.Content += GetText("error") + ": " + GetText("printeryFormatError") + "\n";
             }
 
             else if (!serialNoNew.Text.ToUpper()[0].Equals(printeryCodeNew.Text.ToUpper()[0]))
             {
-                newResults.Content += getText("error") + ": " + getText("codeMatchError") + "\n";
+                newResults.Content += GetText("error") + ": " + GetText("codeMatchError") + "\n";
             }
-            
+
             if (!newResults.Content.Equals(""))
             {
-                newResults.Content = getText("invalidSerial") + "\n\n" + newResults.Content;
+                SetNew("error");
                 return;
             }
-            
-            if (client.CheckNewSerial(serialNoNew.Text))
+
+            if (_client.CheckNewSerial(serialNoNew.Text))
             {
-                Printery printery = client.getNewPrintery(printeryCodeNew.Text, languageBox.SelectedValue.ToString());
+                Printery printery = _client.getNewPrintery(printeryCodeNew.Text, languageBox.SelectedValue.ToString());
                 if (printery.Country != null)
                 {
-                    newResults.Content += getText("validSerial") + "\n\n";
-                    newResults.Content += getText("newResult") + ": \n";
+                    SetNew("valid");
+                    newResults.Content += GetText("newResult") + ": \n";
                     newResults.Content += printery.Name + "\n" + printery.City + ", " + printery.Country + "\n";
-                    if (!printery.Circulation)
-                    {
-                        newResults.Content += getText("warning") + ": " + getText("circulationWarning");
-                    }
+                    if (printery.Circulation) return;
+                    SetNew("warning");
+                    newResults.Content += GetText("warning") + ": " + GetText("circulationWarning");
                 }
                 else
                 {
-                    newResults.Content = getText("invalidSerial") + "\n\n" + getText("noDataError");
+                    SetNew("error");
+                    newResults.Content = GetText("error") + ": " + GetText("noDataError");
                 }
             }
 
             else
             {
-                newResults.Content = getText("invalidSerial") + "\n\n";
-                newResults.Content += getText("error") + ": " + getText("serialInvalidError");
+                SetNew("error");
+                newResults.Content += GetText("error") + ": " + GetText("serialInvalidError");
             }
+        }
+
+        private void SetNew(string type)
+        {
+            switch (type)
+            {
+                case "error":
+                    newGroupBox.Header = GetText("invalidSerial");
+                    ColorZoneAssist.SetBackground(newGroupBox, Brushes.Red);
+                    break;
+                case "valid":
+                    newGroupBox.Header = GetText("validSerial");
+                    ColorZoneAssist.SetBackground(newGroupBox, Brushes.Green);
+                    break;
+                case "warning":
+                    ColorZoneAssist.SetBackground(newGroupBox, Brushes.Orange);
+                    break;
+                case "clear":
+                    ColorZoneAssist.SetBackground(newGroupBox, Brushes.White);
+                    newResults.Content = "";
+                    break;
+            }
+        }
+
+        #endregion
+
+        public event PropertyChangedEventHandler? PropertyChanged;
+
+        protected virtual void OnPropertyChanged([CallerMemberName] string? propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }
