@@ -282,6 +282,7 @@ SET IDENTITY_INSERT Texts ON;
 INSERT INTO Texts (textID, [desc])
     VALUES
         (0, 'title'),
+        (1, 'info'),
 
         (10, 'oldTitle'),
         (11, 'newTitle'),
@@ -315,6 +316,8 @@ INSERT INTO LTexts (textID, languageID, text)
     VALUES
         (0, 1, 'Euro - Prüfziffernkontrolle'),
         (0, 2, 'Euro - Serial Number Lookup'),
+        (1, 1, 'Ergebnisse werden hier gezeigt'),
+        (1, 2, 'Results will be displayed here'),
 
         (10, 1, 'Alte Geldscheine prüfen'),
         (10, 2, 'Check old banknotes'),

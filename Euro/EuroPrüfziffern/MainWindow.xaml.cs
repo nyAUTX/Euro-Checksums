@@ -27,6 +27,8 @@ namespace EuroPrüfziffern
             languageBox.SelectedValuePath = "Key"; // zb: deu
             languageBox.SelectedIndex = 0;
 
+            SetOld("clear");
+            SetNew("clear");
             SetTexts();
         }
 
@@ -129,8 +131,9 @@ namespace EuroPrüfziffern
                     ColorZoneAssist.SetBackground(oldGroupBox, Brushes.Orange);
                     break;
                 case "clear":
-                    ColorZoneAssist.SetBackground(oldGroupBox, Brushes.White);
+                    ColorZoneAssist.SetBackground(oldGroupBox, Brushes.DodgerBlue);
                     oldResults.Content = "";
+                    oldGroupBox.Header = GetText("info");
                     break;
             }
         }
@@ -205,8 +208,9 @@ namespace EuroPrüfziffern
                     ColorZoneAssist.SetBackground(newGroupBox, Brushes.Orange);
                     break;
                 case "clear":
-                    ColorZoneAssist.SetBackground(newGroupBox, Brushes.White);
+                    ColorZoneAssist.SetBackground(newGroupBox, Brushes.DodgerBlue);
                     newResults.Content = "";
+                    newGroupBox.Header = GetText("info");
                     break;
             }
         }

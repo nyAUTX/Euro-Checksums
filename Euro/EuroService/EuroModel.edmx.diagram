@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="ff028fb67a8f4fa484e6244a71f70180" Name="Diagram1">
+        <EntityTypeShape EntityType="EuroModel.City" Width="1.5" PointX="0.75" PointY="9.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="EuroModel.Country" Width="1.5" PointX="0.75" PointY="6.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="EuroModel.EuropeSery" Width="1.5" PointX="3" PointY="6.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="EuroModel.Language" Width="1.5" PointX="0.75" PointY="3.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="EuroModel.LCity" Width="1.5" PointX="6" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="EuroModel.LCountry" Width="1.5" PointX="3" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="EuroModel.LText" Width="1.5" PointX="3" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="EuroModel.OldSery" Width="1.5" PointX="3" PointY="12.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="EuroModel.Printery" Width="1.5" PointX="6" PointY="6.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="EuroModel.Text" Width="1.5" PointX="0.75" PointY="1.125" IsExpanded="true" />
+        <AssociationConnector Association="EuroModel.FKEuropeSeri541743" ManuallyRouted="false" />
+        <AssociationConnector Association="EuroModel.FKLCities35967" ManuallyRouted="false" />
+        <AssociationConnector Association="EuroModel.FKPrintery136434" ManuallyRouted="false" />
+        <AssociationConnector Association="EuroModel.FKEuropeSeri285393" ManuallyRouted="false" />
+        <AssociationConnector Association="EuroModel.FKLCountries775008" ManuallyRouted="false" />
+        <AssociationConnector Association="EuroModel.FKOldSeries683952" ManuallyRouted="false" />
+        <AssociationConnector Association="EuroModel.FKPrintery392784" ManuallyRouted="false" />
+        <AssociationConnector Association="EuroModel.FKLCities418157" ManuallyRouted="false" />
+        <AssociationConnector Association="EuroModel.FKLCountries422765" ManuallyRouted="false" />
+        <AssociationConnector Association="EuroModel.FKLTexts616762" ManuallyRouted="false" />
+        <AssociationConnector Association="EuroModel.FKLTexts180567" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

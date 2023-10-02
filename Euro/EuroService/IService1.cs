@@ -27,9 +27,9 @@ namespace EuroService
         [OperationContract]
         string getCountry(string serial, string lang);
         [OperationContract]
-        Printery getNewPrintery(string serial, string lang);
+        PrinteryData getNewPrintery(string serial, string lang);
         [OperationContract]
-        Printery getOldPrintery(string serial, string lang);
+        PrinteryData getOldPrintery(string serial, string lang);
         [OperationContract]
         string getMessage(string serial, string lang);
         [OperationContract]
@@ -37,7 +37,7 @@ namespace EuroService
     }
 
     [DataContract]
-    public class Printery
+    public class PrinteryData
     {
         [DataMember]
         public string Name { get; set; }

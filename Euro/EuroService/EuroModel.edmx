@@ -1,0 +1,708 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="EuroModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Cities">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="code" Type="char" MaxLength="6" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Countries">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="code" Type="char" MaxLength="3" Nullable="false" />
+        </EntityType>
+        <EntityType Name="EuropeSeries">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="code" Type="char" MaxLength="1" Nullable="false" />
+          <Property Name="printery" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="countryID" Type="int" Nullable="false" />
+          <Property Name="cityID" Type="int" Nullable="false" />
+          <Property Name="circulation" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Language">
+          <Key>
+            <PropertyRef Name="languageID" />
+          </Key>
+          <Property Name="languageID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="code" Type="char" MaxLength="3" Nullable="false" />
+          <Property Name="name" Type="varchar" MaxLength="255" Nullable="false" />
+        </EntityType>
+        <EntityType Name="LCities">
+          <Key>
+            <PropertyRef Name="cityID" />
+            <PropertyRef Name="languageID" />
+          </Key>
+          <Property Name="cityID" Type="int" Nullable="false" />
+          <Property Name="languageID" Type="int" Nullable="false" />
+          <Property Name="name" Type="varchar" MaxLength="255" Nullable="false" />
+        </EntityType>
+        <EntityType Name="LCountries">
+          <Key>
+            <PropertyRef Name="countryID" />
+            <PropertyRef Name="languageID" />
+          </Key>
+          <Property Name="countryID" Type="int" Nullable="false" />
+          <Property Name="languageID" Type="int" Nullable="false" />
+          <Property Name="name" Type="varchar" MaxLength="255" Nullable="false" />
+        </EntityType>
+        <EntityType Name="LTexts">
+          <Key>
+            <PropertyRef Name="textID" />
+            <PropertyRef Name="languageID" />
+          </Key>
+          <Property Name="textID" Type="int" Nullable="false" />
+          <Property Name="languageID" Type="int" Nullable="false" />
+          <Property Name="text" Type="varchar" MaxLength="255" Nullable="false" />
+        </EntityType>
+        <EntityType Name="OldSeries">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="code" Type="char" MaxLength="1" Nullable="false" />
+          <Property Name="countryID" Type="int" Nullable="false" />
+          <Property Name="circulation" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Printery">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="code" Type="char" MaxLength="1" Nullable="false" />
+          <Property Name="name" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="countryID" Type="int" Nullable="false" />
+          <Property Name="cityID" Type="int" Nullable="false" />
+          <Property Name="circulation" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Texts">
+          <Key>
+            <PropertyRef Name="textID" />
+          </Key>
+          <Property Name="textID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="desc" Type="varchar" MaxLength="255" Nullable="false" />
+        </EntityType>
+        <Association Name="FKEuropeSeri285393">
+          <End Role="Countries" Type="Self.Countries" Multiplicity="1" />
+          <End Role="EuropeSeries" Type="Self.EuropeSeries" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Countries">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="EuropeSeries">
+              <PropertyRef Name="countryID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FKEuropeSeri541743">
+          <End Role="Cities" Type="Self.Cities" Multiplicity="1" />
+          <End Role="EuropeSeries" Type="Self.EuropeSeries" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cities">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="EuropeSeries">
+              <PropertyRef Name="cityID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FKLCities35967">
+          <End Role="Cities" Type="Self.Cities" Multiplicity="1" />
+          <End Role="LCities" Type="Self.LCities" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cities">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="LCities">
+              <PropertyRef Name="cityID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FKLCities418157">
+          <End Role="Language" Type="Self.Language" Multiplicity="1" />
+          <End Role="LCities" Type="Self.LCities" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Language">
+              <PropertyRef Name="languageID" />
+            </Principal>
+            <Dependent Role="LCities">
+              <PropertyRef Name="languageID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FKLCountries422765">
+          <End Role="Language" Type="Self.Language" Multiplicity="1" />
+          <End Role="LCountries" Type="Self.LCountries" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Language">
+              <PropertyRef Name="languageID" />
+            </Principal>
+            <Dependent Role="LCountries">
+              <PropertyRef Name="languageID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FKLCountries775008">
+          <End Role="Countries" Type="Self.Countries" Multiplicity="1" />
+          <End Role="LCountries" Type="Self.LCountries" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Countries">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="LCountries">
+              <PropertyRef Name="countryID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FKLTexts180567">
+          <End Role="Texts" Type="Self.Texts" Multiplicity="1" />
+          <End Role="LTexts" Type="Self.LTexts" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Texts">
+              <PropertyRef Name="textID" />
+            </Principal>
+            <Dependent Role="LTexts">
+              <PropertyRef Name="textID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FKLTexts616762">
+          <End Role="Language" Type="Self.Language" Multiplicity="1" />
+          <End Role="LTexts" Type="Self.LTexts" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Language">
+              <PropertyRef Name="languageID" />
+            </Principal>
+            <Dependent Role="LTexts">
+              <PropertyRef Name="languageID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FKOldSeries683952">
+          <End Role="Countries" Type="Self.Countries" Multiplicity="1" />
+          <End Role="OldSeries" Type="Self.OldSeries" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Countries">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="OldSeries">
+              <PropertyRef Name="countryID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FKPrintery136434">
+          <End Role="Cities" Type="Self.Cities" Multiplicity="1" />
+          <End Role="Printery" Type="Self.Printery" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cities">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Printery">
+              <PropertyRef Name="cityID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FKPrintery392784">
+          <End Role="Countries" Type="Self.Countries" Multiplicity="1" />
+          <End Role="Printery" Type="Self.Printery" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Countries">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Printery">
+              <PropertyRef Name="countryID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="EuroModelStoreContainer">
+          <EntitySet Name="Cities" EntityType="Self.Cities" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Countries" EntityType="Self.Countries" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="EuropeSeries" EntityType="Self.EuropeSeries" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Language" EntityType="Self.Language" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="LCities" EntityType="Self.LCities" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="LCountries" EntityType="Self.LCountries" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="LTexts" EntityType="Self.LTexts" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="OldSeries" EntityType="Self.OldSeries" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Printery" EntityType="Self.Printery" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Texts" EntityType="Self.Texts" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FKEuropeSeri285393" Association="Self.FKEuropeSeri285393">
+            <End Role="Countries" EntitySet="Countries" />
+            <End Role="EuropeSeries" EntitySet="EuropeSeries" />
+          </AssociationSet>
+          <AssociationSet Name="FKEuropeSeri541743" Association="Self.FKEuropeSeri541743">
+            <End Role="Cities" EntitySet="Cities" />
+            <End Role="EuropeSeries" EntitySet="EuropeSeries" />
+          </AssociationSet>
+          <AssociationSet Name="FKLCities35967" Association="Self.FKLCities35967">
+            <End Role="Cities" EntitySet="Cities" />
+            <End Role="LCities" EntitySet="LCities" />
+          </AssociationSet>
+          <AssociationSet Name="FKLCities418157" Association="Self.FKLCities418157">
+            <End Role="Language" EntitySet="Language" />
+            <End Role="LCities" EntitySet="LCities" />
+          </AssociationSet>
+          <AssociationSet Name="FKLCountries422765" Association="Self.FKLCountries422765">
+            <End Role="Language" EntitySet="Language" />
+            <End Role="LCountries" EntitySet="LCountries" />
+          </AssociationSet>
+          <AssociationSet Name="FKLCountries775008" Association="Self.FKLCountries775008">
+            <End Role="Countries" EntitySet="Countries" />
+            <End Role="LCountries" EntitySet="LCountries" />
+          </AssociationSet>
+          <AssociationSet Name="FKLTexts180567" Association="Self.FKLTexts180567">
+            <End Role="Texts" EntitySet="Texts" />
+            <End Role="LTexts" EntitySet="LTexts" />
+          </AssociationSet>
+          <AssociationSet Name="FKLTexts616762" Association="Self.FKLTexts616762">
+            <End Role="Language" EntitySet="Language" />
+            <End Role="LTexts" EntitySet="LTexts" />
+          </AssociationSet>
+          <AssociationSet Name="FKOldSeries683952" Association="Self.FKOldSeries683952">
+            <End Role="Countries" EntitySet="Countries" />
+            <End Role="OldSeries" EntitySet="OldSeries" />
+          </AssociationSet>
+          <AssociationSet Name="FKPrintery136434" Association="Self.FKPrintery136434">
+            <End Role="Cities" EntitySet="Cities" />
+            <End Role="Printery" EntitySet="Printery" />
+          </AssociationSet>
+          <AssociationSet Name="FKPrintery392784" Association="Self.FKPrintery392784">
+            <End Role="Countries" EntitySet="Countries" />
+            <End Role="Printery" EntitySet="Printery" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="EuroModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="City">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="code" Type="String" MaxLength="6" FixedLength="true" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="EuropeSeries" Relationship="Self.FKEuropeSeri541743" FromRole="Cities" ToRole="EuropeSeries" />
+          <NavigationProperty Name="LCities" Relationship="Self.FKLCities35967" FromRole="Cities" ToRole="LCities" />
+          <NavigationProperty Name="Printeries" Relationship="Self.FKPrintery136434" FromRole="Cities" ToRole="Printery" />
+        </EntityType>
+        <EntityType Name="Country">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="code" Type="String" MaxLength="3" FixedLength="true" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="EuropeSeries" Relationship="Self.FKEuropeSeri285393" FromRole="Countries" ToRole="EuropeSeries" />
+          <NavigationProperty Name="LCountries" Relationship="Self.FKLCountries775008" FromRole="Countries" ToRole="LCountries" />
+          <NavigationProperty Name="OldSeries" Relationship="Self.FKOldSeries683952" FromRole="Countries" ToRole="OldSeries" />
+          <NavigationProperty Name="Printeries" Relationship="Self.FKPrintery392784" FromRole="Countries" ToRole="Printery" />
+        </EntityType>
+        <EntityType Name="EuropeSery">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="code" Type="String" MaxLength="1" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="printery" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="countryID" Type="Int32" Nullable="false" />
+          <Property Name="cityID" Type="Int32" Nullable="false" />
+          <Property Name="circulation" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="City" Relationship="Self.FKEuropeSeri541743" FromRole="EuropeSeries" ToRole="Cities" />
+          <NavigationProperty Name="Country" Relationship="Self.FKEuropeSeri285393" FromRole="EuropeSeries" ToRole="Countries" />
+        </EntityType>
+        <EntityType Name="Language">
+          <Key>
+            <PropertyRef Name="languageID" />
+          </Key>
+          <Property Name="languageID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="code" Type="String" MaxLength="3" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="name" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="LCities" Relationship="Self.FKLCities418157" FromRole="Language" ToRole="LCities" />
+          <NavigationProperty Name="LCountries" Relationship="Self.FKLCountries422765" FromRole="Language" ToRole="LCountries" />
+          <NavigationProperty Name="LTexts" Relationship="Self.FKLTexts616762" FromRole="Language" ToRole="LTexts" />
+        </EntityType>
+        <EntityType Name="LCity">
+          <Key>
+            <PropertyRef Name="cityID" />
+            <PropertyRef Name="languageID" />
+          </Key>
+          <Property Name="cityID" Type="Int32" Nullable="false" />
+          <Property Name="languageID" Type="Int32" Nullable="false" />
+          <Property Name="name" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="City" Relationship="Self.FKLCities35967" FromRole="LCities" ToRole="Cities" />
+          <NavigationProperty Name="Language" Relationship="Self.FKLCities418157" FromRole="LCities" ToRole="Language" />
+        </EntityType>
+        <EntityType Name="LCountry">
+          <Key>
+            <PropertyRef Name="countryID" />
+            <PropertyRef Name="languageID" />
+          </Key>
+          <Property Name="countryID" Type="Int32" Nullable="false" />
+          <Property Name="languageID" Type="Int32" Nullable="false" />
+          <Property Name="name" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Country" Relationship="Self.FKLCountries775008" FromRole="LCountries" ToRole="Countries" />
+          <NavigationProperty Name="Language" Relationship="Self.FKLCountries422765" FromRole="LCountries" ToRole="Language" />
+        </EntityType>
+        <EntityType Name="LText">
+          <Key>
+            <PropertyRef Name="textID" />
+            <PropertyRef Name="languageID" />
+          </Key>
+          <Property Name="textID" Type="Int32" Nullable="false" />
+          <Property Name="languageID" Type="Int32" Nullable="false" />
+          <Property Name="text" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Language" Relationship="Self.FKLTexts616762" FromRole="LTexts" ToRole="Language" />
+          <NavigationProperty Name="Text1" Relationship="Self.FKLTexts180567" FromRole="LTexts" ToRole="Texts" />
+        </EntityType>
+        <EntityType Name="OldSery">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="code" Type="String" MaxLength="1" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="countryID" Type="Int32" Nullable="false" />
+          <Property Name="circulation" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Country" Relationship="Self.FKOldSeries683952" FromRole="OldSeries" ToRole="Countries" />
+        </EntityType>
+        <EntityType Name="Printery">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="code" Type="String" MaxLength="1" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="name" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="countryID" Type="Int32" Nullable="false" />
+          <Property Name="cityID" Type="Int32" Nullable="false" />
+          <Property Name="circulation" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="City" Relationship="Self.FKPrintery136434" FromRole="Printery" ToRole="Cities" />
+          <NavigationProperty Name="Country" Relationship="Self.FKPrintery392784" FromRole="Printery" ToRole="Countries" />
+        </EntityType>
+        <EntityType Name="Text">
+          <Key>
+            <PropertyRef Name="textID" />
+          </Key>
+          <Property Name="textID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="desc" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="LTexts" Relationship="Self.FKLTexts180567" FromRole="Texts" ToRole="LTexts" />
+        </EntityType>
+        <Association Name="FKEuropeSeri541743">
+          <End Role="Cities" Type="Self.City" Multiplicity="1" />
+          <End Role="EuropeSeries" Type="Self.EuropeSery" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cities">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="EuropeSeries">
+              <PropertyRef Name="cityID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FKLCities35967">
+          <End Role="Cities" Type="Self.City" Multiplicity="1" />
+          <End Role="LCities" Type="Self.LCity" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cities">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="LCities">
+              <PropertyRef Name="cityID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FKPrintery136434">
+          <End Role="Cities" Type="Self.City" Multiplicity="1" />
+          <End Role="Printery" Type="Self.Printery" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cities">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Printery">
+              <PropertyRef Name="cityID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FKEuropeSeri285393">
+          <End Role="Countries" Type="Self.Country" Multiplicity="1" />
+          <End Role="EuropeSeries" Type="Self.EuropeSery" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Countries">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="EuropeSeries">
+              <PropertyRef Name="countryID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FKLCountries775008">
+          <End Role="Countries" Type="Self.Country" Multiplicity="1" />
+          <End Role="LCountries" Type="Self.LCountry" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Countries">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="LCountries">
+              <PropertyRef Name="countryID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FKOldSeries683952">
+          <End Role="Countries" Type="Self.Country" Multiplicity="1" />
+          <End Role="OldSeries" Type="Self.OldSery" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Countries">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="OldSeries">
+              <PropertyRef Name="countryID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FKPrintery392784">
+          <End Role="Countries" Type="Self.Country" Multiplicity="1" />
+          <End Role="Printery" Type="Self.Printery" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Countries">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Printery">
+              <PropertyRef Name="countryID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FKLCities418157">
+          <End Role="Language" Type="Self.Language" Multiplicity="1" />
+          <End Role="LCities" Type="Self.LCity" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Language">
+              <PropertyRef Name="languageID" />
+            </Principal>
+            <Dependent Role="LCities">
+              <PropertyRef Name="languageID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FKLCountries422765">
+          <End Role="Language" Type="Self.Language" Multiplicity="1" />
+          <End Role="LCountries" Type="Self.LCountry" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Language">
+              <PropertyRef Name="languageID" />
+            </Principal>
+            <Dependent Role="LCountries">
+              <PropertyRef Name="languageID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FKLTexts616762">
+          <End Role="Language" Type="Self.Language" Multiplicity="1" />
+          <End Role="LTexts" Type="Self.LText" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Language">
+              <PropertyRef Name="languageID" />
+            </Principal>
+            <Dependent Role="LTexts">
+              <PropertyRef Name="languageID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FKLTexts180567">
+          <End Role="Texts" Type="Self.Text" Multiplicity="1" />
+          <End Role="LTexts" Type="Self.LText" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Texts">
+              <PropertyRef Name="textID" />
+            </Principal>
+            <Dependent Role="LTexts">
+              <PropertyRef Name="textID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="EuroEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Cities" EntityType="Self.City" />
+          <EntitySet Name="Countries" EntityType="Self.Country" />
+          <EntitySet Name="EuropeSeries" EntityType="Self.EuropeSery" />
+          <EntitySet Name="Languages" EntityType="Self.Language" />
+          <EntitySet Name="LCities" EntityType="Self.LCity" />
+          <EntitySet Name="LCountries" EntityType="Self.LCountry" />
+          <EntitySet Name="LTexts" EntityType="Self.LText" />
+          <EntitySet Name="OldSeries" EntityType="Self.OldSery" />
+          <EntitySet Name="Printeries" EntityType="Self.Printery" />
+          <EntitySet Name="Texts" EntityType="Self.Text" />
+          <AssociationSet Name="FKEuropeSeri541743" Association="Self.FKEuropeSeri541743">
+            <End Role="Cities" EntitySet="Cities" />
+            <End Role="EuropeSeries" EntitySet="EuropeSeries" />
+          </AssociationSet>
+          <AssociationSet Name="FKLCities35967" Association="Self.FKLCities35967">
+            <End Role="Cities" EntitySet="Cities" />
+            <End Role="LCities" EntitySet="LCities" />
+          </AssociationSet>
+          <AssociationSet Name="FKPrintery136434" Association="Self.FKPrintery136434">
+            <End Role="Cities" EntitySet="Cities" />
+            <End Role="Printery" EntitySet="Printeries" />
+          </AssociationSet>
+          <AssociationSet Name="FKEuropeSeri285393" Association="Self.FKEuropeSeri285393">
+            <End Role="Countries" EntitySet="Countries" />
+            <End Role="EuropeSeries" EntitySet="EuropeSeries" />
+          </AssociationSet>
+          <AssociationSet Name="FKLCountries775008" Association="Self.FKLCountries775008">
+            <End Role="Countries" EntitySet="Countries" />
+            <End Role="LCountries" EntitySet="LCountries" />
+          </AssociationSet>
+          <AssociationSet Name="FKOldSeries683952" Association="Self.FKOldSeries683952">
+            <End Role="Countries" EntitySet="Countries" />
+            <End Role="OldSeries" EntitySet="OldSeries" />
+          </AssociationSet>
+          <AssociationSet Name="FKPrintery392784" Association="Self.FKPrintery392784">
+            <End Role="Countries" EntitySet="Countries" />
+            <End Role="Printery" EntitySet="Printeries" />
+          </AssociationSet>
+          <AssociationSet Name="FKLCities418157" Association="Self.FKLCities418157">
+            <End Role="Language" EntitySet="Languages" />
+            <End Role="LCities" EntitySet="LCities" />
+          </AssociationSet>
+          <AssociationSet Name="FKLCountries422765" Association="Self.FKLCountries422765">
+            <End Role="Language" EntitySet="Languages" />
+            <End Role="LCountries" EntitySet="LCountries" />
+          </AssociationSet>
+          <AssociationSet Name="FKLTexts616762" Association="Self.FKLTexts616762">
+            <End Role="Language" EntitySet="Languages" />
+            <End Role="LTexts" EntitySet="LTexts" />
+          </AssociationSet>
+          <AssociationSet Name="FKLTexts180567" Association="Self.FKLTexts180567">
+            <End Role="Texts" EntitySet="Texts" />
+            <End Role="LTexts" EntitySet="LTexts" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="EuroModelStoreContainer" CdmEntityContainer="EuroEntities">
+          <EntitySetMapping Name="Cities">
+            <EntityTypeMapping TypeName="EuroModel.City">
+              <MappingFragment StoreEntitySet="Cities">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="code" ColumnName="code" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Countries">
+            <EntityTypeMapping TypeName="EuroModel.Country">
+              <MappingFragment StoreEntitySet="Countries">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="code" ColumnName="code" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="EuropeSeries">
+            <EntityTypeMapping TypeName="EuroModel.EuropeSery">
+              <MappingFragment StoreEntitySet="EuropeSeries">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="code" ColumnName="code" />
+                <ScalarProperty Name="printery" ColumnName="printery" />
+                <ScalarProperty Name="countryID" ColumnName="countryID" />
+                <ScalarProperty Name="cityID" ColumnName="cityID" />
+                <ScalarProperty Name="circulation" ColumnName="circulation" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Languages">
+            <EntityTypeMapping TypeName="EuroModel.Language">
+              <MappingFragment StoreEntitySet="Language">
+                <ScalarProperty Name="languageID" ColumnName="languageID" />
+                <ScalarProperty Name="code" ColumnName="code" />
+                <ScalarProperty Name="name" ColumnName="name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="LCities">
+            <EntityTypeMapping TypeName="EuroModel.LCity">
+              <MappingFragment StoreEntitySet="LCities">
+                <ScalarProperty Name="cityID" ColumnName="cityID" />
+                <ScalarProperty Name="languageID" ColumnName="languageID" />
+                <ScalarProperty Name="name" ColumnName="name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="LCountries">
+            <EntityTypeMapping TypeName="EuroModel.LCountry">
+              <MappingFragment StoreEntitySet="LCountries">
+                <ScalarProperty Name="countryID" ColumnName="countryID" />
+                <ScalarProperty Name="languageID" ColumnName="languageID" />
+                <ScalarProperty Name="name" ColumnName="name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="LTexts">
+            <EntityTypeMapping TypeName="EuroModel.LText">
+              <MappingFragment StoreEntitySet="LTexts">
+                <ScalarProperty Name="textID" ColumnName="textID" />
+                <ScalarProperty Name="languageID" ColumnName="languageID" />
+                <ScalarProperty Name="text" ColumnName="text" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="OldSeries">
+            <EntityTypeMapping TypeName="EuroModel.OldSery">
+              <MappingFragment StoreEntitySet="OldSeries">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="code" ColumnName="code" />
+                <ScalarProperty Name="countryID" ColumnName="countryID" />
+                <ScalarProperty Name="circulation" ColumnName="circulation" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Printeries">
+            <EntityTypeMapping TypeName="EuroModel.Printery">
+              <MappingFragment StoreEntitySet="Printery">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="code" ColumnName="code" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="countryID" ColumnName="countryID" />
+                <ScalarProperty Name="cityID" ColumnName="cityID" />
+                <ScalarProperty Name="circulation" ColumnName="circulation" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Texts">
+            <EntityTypeMapping TypeName="EuroModel.Text">
+              <MappingFragment StoreEntitySet="Texts">
+                <ScalarProperty Name="textID" ColumnName="textID" />
+                <ScalarProperty Name="desc" ColumnName="desc" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

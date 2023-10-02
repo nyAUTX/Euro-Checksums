@@ -11,11 +11,11 @@ using System.Xml;
 
 namespace EuroService
 {
-     public class Service1 : IService1
+    public class Service1 : IService1
     {
+        private readonly EuroEntities _db = new EuroEntities();
 
-        string connectionString = "Data Source=localhost;Initial Catalog=Euro;Integrated Security=True;";
-        
+        #region SerialCheck
         public bool CheckOldSerial(string serial)
         {
             if (!CheckOldSerialFormat(serial))
@@ -23,22 +23,22 @@ namespace EuroService
                 return false;
             }
 
-            char firstLetter = serial[0];
-            int firstLetterValue = char.ToUpper(firstLetter) - 'A' + 1;
+            var firstLetter = serial[0];
+            var firstLetterValue = char.ToUpper(firstLetter) - 'A' + 1;
 
-            int lastNumber = (int)char.GetNumericValue(serial[11]);
+            var lastNumber = (int)char.GetNumericValue(serial[11]);
 
-            int sum = 0;
-            for (int i = 1; i <= 10; i++)
+            var sum = 0;
+            for (var i = 1; i <= 10; i++)
             {
-                char letter = serial[i];
+                var letter = serial[i];
 
                 sum += (int)char.GetNumericValue(letter);
             }
 
             sum += firstLetterValue;
-            
-            int checksum = 8 - sum % 9;
+
+            var checksum = 8 - sum % 9;
 
             if (checksum == 0 && lastNumber == 9)
             {
@@ -56,109 +56,115 @@ namespace EuroService
                 return false;
             }
 
-            int firstLetterValue = char.ToUpper(serial[0]) - 'A' + 1;
-            int secondLetterValue = char.ToUpper(serial[1]) - 'A' + 1;
-            int lastNumber = (int)char.GetNumericValue(serial[11]);
+            var firstLetterValue = char.ToUpper(serial[0]) - 'A' + 1;
+            var secondLetterValue = char.ToUpper(serial[1]) - 'A' + 1;
+            var lastNumber = (int)char.GetNumericValue(serial[11]);
 
-            int sum = 0;
-            for (int i = 2; i <= 10; i++)
+            var sum = 0;
+            for (var i = 2; i <= 10; i++)
             {
-                char letter = serial[i];
+                var letter = serial[i];
 
                 sum += (int)char.GetNumericValue(letter);
             }
 
             sum += firstLetterValue + secondLetterValue;
 
-            int checksum = 7 - sum % 9;
+            var checksum = 7 - sum % 9;
 
             if (checksum == 0 && lastNumber == 9 || checksum == -1 && lastNumber == 8)
             {
                 return true;
             }
-            
+
             return checksum == lastNumber;
         }
-        
-        // Check Formats
+        #endregion
+
+        #region CheckFormats
         public bool CheckOldSerialFormat(string serial)
         {
-            if (serial.Length != 12
-                || int.TryParse(serial[0].ToString(), out _)
-                || !long.TryParse(serial.Substring(1), out _))
-            {
-                return false;
-            }
-            return true;
+            return serial.Length == 12
+                   && !int.TryParse(serial[0].ToString(), out _)
+                   && long.TryParse(serial.Substring(1), out _);
         }
-        
+
         public bool CheckNewSerialFormat(string serial)
         {
-            if (serial.Length != 12
-                || int.TryParse(serial[0].ToString(), out _)
-                || int.TryParse(serial[1].ToString(), out _)
-                || !long.TryParse(serial.Substring(2), out _))
-            {
-                return false;
-            }
-            return true;
+            return serial.Length == 12
+                   && !int.TryParse(serial[0].ToString(), out _)
+                   && !int.TryParse(serial[1].ToString(), out _)
+                   && long.TryParse(serial.Substring(2), out _);
         }
-        
+
         public bool CheckPrinteryFormat(string print)
         {
-            if (print.Length != 6
-               || int.TryParse(print[0].ToString(), out _))
-            {
-                return false;
-            }
-            return true;
+            return print.Length == 6
+                   && !int.TryParse(print[0].ToString(), out _);
         }
+        #endregion
 
-        // Get data
+        #region Data
         public string getCountry(string serial, string lang)
         {
-            string query = 
-                "SELECT LCountries.name AS country FROM OldSeries " +
-                "JOIN Countries ON OldSeries.countryID = Countries.id " +
-                "JOIN LCountries ON Countries.id = LCountries.countryID " +
-                "JOIN Language ON LCountries.languageID = Language.languageID " +
-                "WHERE OldSeries.code = @Code AND Language.code = @Lang;";
+            var serialCode = serial[0].ToString();
 
-            // Create a new SqlConnection and SqlCommand
-            using (SqlConnection connection = new SqlConnection(connectionString))
-            {
-                using (SqlCommand command = new SqlCommand(query, connection))
-                {
-                    try
-                    {
-                        command.Parameters.AddWithValue("@Code", serial[0]);
-                        command.Parameters.AddWithValue("@Lang", lang);
-
-                        connection.Open();
-
-                        using (SqlDataReader reader = command.ExecuteReader())
+            var query = from oldSeries in _db.OldSeries
+                        join countries in _db.Countries on oldSeries.countryID equals countries.id
+                        join lCountries in _db.LCountries on countries.id equals lCountries.countryID
+                        join language in _db.Languages on lCountries.languageID equals language.languageID
+                        where oldSeries.code == serialCode && language.code == lang
+                        select new
                         {
-                            if (reader.Read())
-                            {
-                                return reader["country"].ToString();
-                            }
-                        }
-                    }
-                    catch (Exception ex)
-                    {
-                        Console.WriteLine("Error: " + ex.Message);
-                    }
-                }
-            }
+                            country = lCountries.name
+                        };
 
-            return null;
+            var country = query.SingleOrDefault();
+            return country?.country;
+
+            /*
+                "SELECT LCountries.name AS country FROM OldSeries " +
+               "JOIN Countries ON OldSeries.countryID = Countries.id " +
+               "JOIN LCountries ON Countries.id = LCountries.countryID " +
+               "JOIN Language ON LCountries.languageID = Language.languageID " +
+               "WHERE OldSeries.code = @Code AND Language.code = @Lang;";
+            */
         }
-        
-        public Printery getNewPrintery(string serial, string lang)
+
+
+        public PrinteryData getNewPrintery(string serial, string lang)
         {
-            Printery printery = new Printery();
-            
-            string query = 
+            var printeryData = new PrinteryData();
+
+            var serialCode = serial[0].ToString();
+
+            var query = from europeSeries in _db.EuropeSeries
+                        join cities in _db.Cities on europeSeries.cityID equals cities.id
+                        join lCities in _db.LCities on cities.id equals lCities.cityID
+                        join countries in _db.Countries on europeSeries.countryID equals countries.id
+                        join lCountries in _db.LCountries on countries.id equals lCountries.countryID
+                        join language in _db.Languages on lCities.languageID equals language.languageID
+                        where europeSeries.code == serialCode && language.code == lang
+                        select new
+                        {
+                            printery_name = europeSeries.printery,
+                            city = lCities.name,
+                            country = lCountries.name,
+                            europeSeries.circulation
+                        };
+
+            var result = query.FirstOrDefault();
+
+            if (result == null) return printeryData;
+
+            printeryData.Name = result.printery_name;
+            printeryData.City = result.city;
+            printeryData.Country = result.country;
+            printeryData.Circulation = Convert.ToBoolean(result.circulation);
+
+            return printeryData;
+
+            /*
                 "SELECT EuropeSeries.printery AS printery_name, LCities.name AS city, LCountries.name AS country, EuropeSeries.circulation FROM EuropeSeries " +
                 "JOIN Cities ON EuropeSeries.cityID = Cities.id " +
                 "JOIN LCities ON Cities.id = LCities.cityID " +
@@ -166,43 +172,42 @@ namespace EuroService
                 "JOIN LCountries ON Countries.id = LCountries.countryID " +
                 "JOIN Language ON LCities.languageID = Language.languageID AND LCountries.languageID = Language.languageID " +
                 "WHERE EuropeSeries.code = @Code AND Language.code = @Lang;";
-
-            using (SqlConnection connection = new SqlConnection(connectionString))
-            {
-                using (SqlCommand command = new SqlCommand(query, connection))
-                {
-                    try
-                    {
-                        command.Parameters.AddWithValue("@Code", serial[0]);
-                        command.Parameters.AddWithValue("@Lang", lang);
-
-                        connection.Open();
-
-                        SqlDataReader reader = command.ExecuteReader();
-                        
-                        if (reader.Read())
-                        {
-                            printery.Name = reader["printery_name"].ToString();
-                            printery.City = reader["city"].ToString();
-                            printery.Country = reader["country"].ToString();
-                            printery.Circulation = Convert.ToBoolean(int.Parse(reader["circulation"].ToString()));
-                        }
-                    }
-                    catch (Exception ex)
-                    {
-                        Console.WriteLine("Error: " + ex.Message);
-                    }
-                }
-            }
-
-            return printery;
+            */
         }
 
-        public Printery getOldPrintery(string serial, string lang)
+        public PrinteryData getOldPrintery(string serial, string lang)
         {
-            Printery printery = new Printery();
-            
-            string query = 
+            var printeryData = new PrinteryData();
+
+            var serialCode = serial[0].ToString();
+
+            var query = from printery in _db.Printeries
+                        join cities in _db.Cities on printery.cityID equals cities.id
+                        join lCities in _db.LCities on cities.id equals lCities.cityID
+                        join countries in _db.Countries on printery.countryID equals countries.id
+                        join lCountries in _db.LCountries on countries.id equals lCountries.countryID
+                        join language in _db.Languages on lCities.languageID equals language.languageID
+                        where printery.code == serialCode && language.code == lang
+                        select new
+                        {
+                            printery_name = printery.name,
+                            city = lCities.name,
+                            country = lCountries.name,
+                            printery.circulation
+                        };
+
+            var result = query.FirstOrDefault();
+
+            if (result == null) return printeryData;
+
+            printeryData.Name = result.printery_name;
+            printeryData.City = result.city;
+            printeryData.Country = result.country;
+            printeryData.Circulation = Convert.ToBoolean(result.circulation);
+
+            return printeryData;
+
+            /*
                 "SELECT Printery.name AS printery_name, LCities.name AS city, LCountries.name AS country, Printery.circulation FROM Printery " +
                 "JOIN Cities ON Printery.cityID = Cities.id " +
                 "JOIN LCities ON Cities.id = LCities.cityID " +
@@ -210,105 +215,32 @@ namespace EuroService
                 "JOIN LCountries ON Countries.id = LCountries.countryID " +
                 "JOIN Language ON LCities.languageID = Language.languageID AND LCountries.languageID = Language.languageID " +
                 "WHERE Printery.code = @Code AND Language.code = @Lang;";
-
-            using (SqlConnection connection = new SqlConnection(connectionString))
-            {
-                using (SqlCommand command = new SqlCommand(query, connection))
-                {
-                    try
-                    {
-                        command.Parameters.AddWithValue("@Code", serial[0]);
-                        command.Parameters.AddWithValue("@Lang", lang);
-
-                        connection.Open();
-
-                        SqlDataReader reader = command.ExecuteReader();
-
-                        if (reader.Read())
-                        {
-                            printery.Name = reader["printery_name"].ToString();
-                            printery.City = reader["city"].ToString();
-                            printery.Country = reader["country"].ToString();
-                            printery.Circulation = Convert.ToBoolean(int.Parse(reader["circulation"].ToString()));
-                        }
-                    }
-                    catch (Exception ex)
-                    {
-                        Console.WriteLine("Error: " + ex.Message);
-                    }
-                }
-            }
-
-            return printery;
+            */
         }
+
 
         public string getMessage(string desc, string lang)
         {
-            string query = 
+            var query = from lText in _db.LTexts
+                        join text in _db.Texts on lText.textID equals text.textID
+                        join language in _db.Languages on lText.languageID equals language.languageID
+                        where language.code == lang && text.desc == desc
+                        select lText.text;
+
+            return query.FirstOrDefault();
+
+            /*
                 "SELECT text FROM LTexts " +
                 "JOIN Texts ON LTexts.textID = Texts.textID " +
                 "JOIN Language ON LTexts.languageID = Language.languageID " +
                 "WHERE Language.code = @Lang AND Texts.[desc] = @Desc;";
-
-            using (SqlConnection connection = new SqlConnection(connectionString))
-            {
-                using (SqlCommand command = new SqlCommand(query, connection))
-                {
-                    try
-                    {
-                        command.Parameters.AddWithValue("@Lang", lang);
-                        command.Parameters.AddWithValue("@Desc", desc);
-
-                        connection.Open();
-
-                        SqlDataReader reader = command.ExecuteReader();
-
-                        if (reader.Read())
-                        {
-                            return reader["text"].ToString();
-                        }
-                    }
-                    catch (Exception ex)
-                    {
-                        Console.WriteLine("Error: " + ex.Message);
-                    }
-                }
-            }
-
-            return null;
+            */
         }
-
         public Dictionary<string, string> GetAllLanguages()
         {
-            string query = "SELECT code, name FROM Language;";
-
-            Dictionary<string, string> languages = new Dictionary<string, string>();
-
-            using (SqlConnection connection = new SqlConnection(connectionString))
-            {
-                using (SqlCommand command = new SqlCommand(query, connection))
-                {
-                    try
-                    {
-                        connection.Open();
-                        SqlDataReader reader = command.ExecuteReader();
-
-                        while (reader.Read())
-                        {
-                            string code = reader["code"].ToString();
-                            string name = reader["name"].ToString();
-                            languages.Add(code, name);
-                        }
-                    }
-                    catch (Exception ex)
-                    {
-                        Console.WriteLine("Error: " + ex.Message);
-                    }
-                }
-            }
-
-            return languages;
+            return _db.Languages.ToDictionary(language => language.code, language => language.name);
         }
+        #endregion
 
     }
 }
