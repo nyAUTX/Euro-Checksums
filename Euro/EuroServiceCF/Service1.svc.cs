@@ -7,6 +7,7 @@ using System.Runtime.Serialization;
 using System.ServiceModel;
 using System.ServiceModel.Web;
 using System.Text;
+using EuroService;
 
 namespace EuroServiceCF
 {
@@ -15,23 +16,55 @@ namespace EuroServiceCF
     public class Service1 : IService1
     {
         private readonly EuroContext db = new EuroContext();
-        
-        public string GetData()
+
+        public bool CheckNewSerial(string serial)
         {
-            return db.Cities.ToString();
+            throw new NotImplementedException();
         }
 
-        public CompositeType GetDataUsingDataContract(CompositeType composite)
+        public bool CheckNewSerialFormat(string serial)
         {
-            if (composite == null)
-            {
-                throw new ArgumentNullException("composite");
-            }
-            if (composite.BoolValue)
-            {
-                composite.StringValue += "Suffix";
-            }
-            return composite;
+            throw new NotImplementedException();
+        }
+
+        public bool CheckOldSerial(string serial)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool CheckOldSerialFormat(string serial)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool CheckPrinteryFormat(string print)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Dictionary<string, string> GetAllLanguages()
+        {
+            throw new NotImplementedException();
+        }
+
+        public string getCountry(string serial, string lang)
+        {
+            throw new NotImplementedException();
+        }
+
+        public string getMessage(string serial, string lang)
+        {
+            throw new NotImplementedException();
+        }
+
+        public PrinteryData getNewPrintery(string serial, string lang)
+        {
+            throw new NotImplementedException();
+        }
+
+        public PrinteryData getOldPrintery(string serial, string lang)
+        {
+            throw new NotImplementedException();
         }
     }
 }
