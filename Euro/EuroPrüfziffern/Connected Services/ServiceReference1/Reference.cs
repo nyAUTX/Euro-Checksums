@@ -14,8 +14,8 @@ namespace ServiceReference1
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="Printery", Namespace="http://schemas.datacontract.org/2004/07/EuroService")]
-    public partial class Printery : object
+    [System.Runtime.Serialization.DataContractAttribute(Name="PrinteryData", Namespace="http://schemas.datacontract.org/2004/07/EuroService")]
+    public partial class PrinteryData : object
     {
         
         private bool CirculationField;
@@ -121,16 +121,16 @@ namespace ServiceReference1
         System.Threading.Tasks.Task<string> getCountryAsync(string serial, string lang);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/getNewPrintery", ReplyAction="http://tempuri.org/IService1/getNewPrinteryResponse")]
-        ServiceReference1.Printery getNewPrintery(string serial, string lang);
+        ServiceReference1.PrinteryData getNewPrintery(string serial, string lang);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/getNewPrintery", ReplyAction="http://tempuri.org/IService1/getNewPrinteryResponse")]
-        System.Threading.Tasks.Task<ServiceReference1.Printery> getNewPrinteryAsync(string serial, string lang);
+        System.Threading.Tasks.Task<ServiceReference1.PrinteryData> getNewPrinteryAsync(string serial, string lang);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/getOldPrintery", ReplyAction="http://tempuri.org/IService1/getOldPrinteryResponse")]
-        ServiceReference1.Printery getOldPrintery(string serial, string lang);
+        ServiceReference1.PrinteryData getOldPrintery(string serial, string lang);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/getOldPrintery", ReplyAction="http://tempuri.org/IService1/getOldPrinteryResponse")]
-        System.Threading.Tasks.Task<ServiceReference1.Printery> getOldPrinteryAsync(string serial, string lang);
+        System.Threading.Tasks.Task<ServiceReference1.PrinteryData> getOldPrinteryAsync(string serial, string lang);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/getMessage", ReplyAction="http://tempuri.org/IService1/getMessageResponse")]
         string getMessage(string serial, string lang);
@@ -248,22 +248,22 @@ namespace ServiceReference1
             return base.Channel.getCountryAsync(serial, lang);
         }
         
-        public ServiceReference1.Printery getNewPrintery(string serial, string lang)
+        public ServiceReference1.PrinteryData getNewPrintery(string serial, string lang)
         {
             return base.Channel.getNewPrintery(serial, lang);
         }
         
-        public System.Threading.Tasks.Task<ServiceReference1.Printery> getNewPrinteryAsync(string serial, string lang)
+        public System.Threading.Tasks.Task<ServiceReference1.PrinteryData> getNewPrinteryAsync(string serial, string lang)
         {
             return base.Channel.getNewPrinteryAsync(serial, lang);
         }
         
-        public ServiceReference1.Printery getOldPrintery(string serial, string lang)
+        public ServiceReference1.PrinteryData getOldPrintery(string serial, string lang)
         {
             return base.Channel.getOldPrintery(serial, lang);
         }
         
-        public System.Threading.Tasks.Task<ServiceReference1.Printery> getOldPrinteryAsync(string serial, string lang)
+        public System.Threading.Tasks.Task<ServiceReference1.PrinteryData> getOldPrinteryAsync(string serial, string lang)
         {
             return base.Channel.getOldPrinteryAsync(serial, lang);
         }
@@ -321,11 +321,11 @@ namespace ServiceReference1
         {
             if ((endpointConfiguration == EndpointConfiguration.BasicHttpBinding_IService1))
             {
-                return new System.ServiceModel.EndpointAddress("http://localhost/EuroService/Service1.svc");
+                return new System.ServiceModel.EndpointAddress("http://localhost/EuroServiceCF/Service1.svc");
             }
             if ((endpointConfiguration == EndpointConfiguration.BasicHttpsBinding_IService1))
             {
-                return new System.ServiceModel.EndpointAddress("https://herndl-lenovo/EuroService/Service1.svc");
+                return new System.ServiceModel.EndpointAddress("https://herndl-lenovo/EuroServiceCF/Service1.svc");
             }
             throw new System.InvalidOperationException(string.Format("Could not find endpoint with name \'{0}\'.", endpointConfiguration));
         }

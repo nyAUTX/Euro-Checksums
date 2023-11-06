@@ -87,7 +87,7 @@ namespace EuroPrüfziffern
 
             if (_client.CheckOldSerial(serialNoOld.Text))
             {
-                Printery printery = _client.getOldPrintery(printeryCodeOld.Text, languageBox.SelectedValue.ToString());
+                PrinteryData printery = _client.getOldPrintery(printeryCodeOld.Text, languageBox.SelectedValue.ToString());
                 var country = _client.getCountry(serialNoOld.Text, languageBox.SelectedValue.ToString());
                 if (printery.Name != null && country != null)
                 {
@@ -168,7 +168,7 @@ namespace EuroPrüfziffern
 
             if (_client.CheckNewSerial(serialNoNew.Text))
             {
-                Printery printery = _client.getNewPrintery(printeryCodeNew.Text, languageBox.SelectedValue.ToString());
+                PrinteryData printery = _client.getNewPrintery(printeryCodeNew.Text, languageBox.SelectedValue.ToString());
                 if (printery.Country != null)
                 {
                     SetNew("valid");

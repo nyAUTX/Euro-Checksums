@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity.Core.Common.CommandTrees;
 using System.Data.SqlClient;
 using System.IO;
 using System.Linq;
@@ -139,19 +140,22 @@ namespace EuroService
             var serialCode = serial[0].ToString();
 
             var query = from europeSeries in _db.EuropeSeries
-                        join cities in _db.Cities on europeSeries.cityID equals cities.id
-                        join lCities in _db.LCities on cities.id equals lCities.cityID
-                        join countries in _db.Countries on europeSeries.countryID equals countries.id
-                        join lCountries in _db.LCountries on countries.id equals lCountries.countryID
-                        join language in _db.Languages on lCities.languageID equals language.languageID
-                        where europeSeries.code == serialCode && language.code == lang
-                        select new
-                        {
-                            printery_name = europeSeries.printery,
-                            city = lCities.name,
-                            country = lCountries.name,
-                            europeSeries.circulation
-                        };
+            join cities in _db.Cities on europeSeries.cityID equals cities.id
+            join lCities in _db.LCities on cities.id equals lCities.cityID
+            join countries in _db.Countries on europeSeries.countryID equals countries.id
+            join lCountries in _db.LCountries on countries.id equals lCountries.countryID
+            join languageCities in _db.Languages on lCities.languageID equals languageCities.languageID
+            join languageCountries in _db.Languages on lCountries.languageID equals languageCountries.languageID
+            where europeSeries.code == serialCode && languageCities.code == lang && languageCountries.code == lang
+            select new
+            {
+                printery_name = europeSeries.printery,
+                city = lCities.name,
+                country = lCountries.name,
+                europeSeries.circulation
+            };
+
+
 
             var result = query.FirstOrDefault();
 

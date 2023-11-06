@@ -11,7 +11,7 @@ namespace EuroServiceCF
     {
         public EuroContext() : base("Data Source=localhost;Initial Catalog=EuroDB;User ID=sa;Password=Passme1234!;Encrypt=False")
         {
-
+            // Database.SetInitializer<EuroContext>(new EuroContextInitializer());
         }
 
         public DbSet<City> Cities { get; set; }
@@ -26,4 +26,15 @@ namespace EuroServiceCF
         public DbSet<Text> Texts { get; set; }
 
     }
+
+    public class EuroContextInitializer : DropCreateDatabaseAlways<EuroContext>
+    {
+        protected override void Seed(EuroContext context)
+        {
+
+            context.SaveChanges();
+
+        }
+    }
+        
 }
