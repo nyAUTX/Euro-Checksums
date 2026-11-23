@@ -130,8 +130,8 @@ publish/
 ## passwords
 *.pubxml
 
-# NuGet Packages Directory
-packages/*
+# NuGet Packages Directory (restored automatically)
+**/[Pp]ackages/*
 ## TODO: If the tool you use requires repositories.config
 ## uncomment the next line
 #!packages/repositories.config
@@ -140,7 +140,7 @@ packages/*
 # NuGet packages use it for MSBuild targets.
 # This line needs to be after the ignore of the build folder
 # (and the packages folder if the line above has been uncommented)
-!packages/build/
+!**/[Pp]ackages/build/
 
 # Windows Azure Build Output
 csx/
@@ -191,4 +191,11 @@ git_stats/*
 StyleCop.Cache
 bin
 obj
-.DB.vpp.lck
+
+# IDE folders (Visual Studio, JetBrains Rider)
+.vs/
+.idea/
+
+# Visual Paradigm lock/backup files
+*.vpp.lck
+*.vpp.bak*
